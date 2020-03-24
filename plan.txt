@@ -1,0 +1,40 @@
+
+layout:
+- pipenv, python3.7, flask, elasticsearch-dsl, semantic-ui
+- python code/libs in sub-directory
+- single-file flask with all routes, call helper routines
+
+design:
+- elasticschema schema
+- i18n URL schema
+- single-page? multi-page?
+- tags/indicators for quality
+
+infra:
+- register dns: covid19.qa.fatcat.wiki, covid19.fatcat.wiki
+
+examples:
+- jupyter notebook
+- observable hq
+
+implement:
+- download GROBID as well as PDFs
+
+topics:
+- Favipiravir
+- Chloroquine
+
+tasks/research:
+- tracking down every single paper from WHO etc
+- finding interesting older papers
+
+papers:
+- imperial college paper
+- WHO reports and recommendations
+- "hammer and the dance" blog-post
+- korean, chinese, singaporean reports
+
+
+
+tools?
+- vega-lite
