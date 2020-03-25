@@ -10,16 +10,6 @@ Behavior:
     - try downloading from any archive.org or web.archive.org URLs
     - verify SHA-1
     - write out to disk
-
-TODO:
-x blob_path(sha1hex) -> returns relative/local path file would be saved to
-x filter_files(files) -> list of files to try
-- fetch_release(release) -> tries to download PDF bytes
-- fetch_file(file) -> returns bytes of fetched file
-- fetch_content(url) -> tries to download PDF bytes
-
-LATER:
-- GRBOID XML as well, from minio?
 """
 
 # XXX: some broken MRO thing going on in here due to python3 object wrangling

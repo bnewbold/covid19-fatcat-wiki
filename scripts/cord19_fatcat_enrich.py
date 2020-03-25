@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This script takes a "Paper" MAG TSV file which has been joined with (at most) a
-single "PaperExtendedAttributes", parses it into JSON, and does fatcat fetches
-to "enrich" the output. Outputs a single JSON object per line with attributes:
-
-    mag_id
-    mag_paper
-    release_id
-    fatcat_release
-
-Input columns:
-
+Takes a JSON-transformed CORD-19 *metadata* file and enriches it with fatcat
+metadata.
 """
 
 import sys
@@ -50,6 +41,9 @@ def do_line(row, args):
     doi = row.get('doi') or None
     fatcat_release = None
 
+    if doi == '0.1126/science.abb7331':
+        doi = '10.1126/science.abb7331'
+
     if not fatcat_release and pmcid:
         resp = args.session.get('https://api.fatcat.wiki/v0/release/lookup',
             params={
@@ -79,7 +73,7 @@ def do_line(row, args):
             fatcat_release = resp.json()
 
     obj = dict(
-        who_paper=row,
+        cord19_paper=row,
     )
     if fatcat_release:
         obj['fatcat_release'] = fatcat_release
@@ -96,7 +90,7 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('json_file',
-        help="WHO/S2 parsed JSON file",
+        help="CORD-19 parsed JSON file",
         type=argparse.FileType('r'))
     subparsers = parser.add_subparsers()
 
