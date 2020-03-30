@@ -34,3 +34,11 @@ Maybe need to set a referer, something like that?
     ./parse_wanfang_html.py wanfang_papers.2020-03-29.html > wanfang_papers.2020-03-29.json
     ./parse_wanfang_html.py wanfang_guidance.2020-03-29.html > wanfang_guidance.2020-03-29.json
 
+Download PDFs (without clobbering existing):
+
+    cat wanfang_papers.2020-03-29.json wanfang_guidance.2020-03-29.json | jq .url -r | parallel wget -P fulltext_wanfang --no-clobber {}
+
+    file fulltext_wanfang/* | cut -f2 -d' ' | sort | uniq -c
+        144 HTML
+        609 PDF
+

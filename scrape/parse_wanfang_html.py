@@ -23,7 +23,7 @@ def parse_wanfang_html(wanfang_html):
         tag_div = paper_li.find('div', **{'class': 'tag'})
         paper = dict(
             is_first_issue=is_first_issue,
-            info_url="http://subject.med.wanfangdata.com.cn" + title_a['href'],
+            url="http://subject.med.wanfangdata.com.cn" + title_a['href'],
             wanfang_id=title_a['href'].split('/')[-1],
             title=title_a.get_text().strip(),
             journal=subtitle_div.find('span', **{'class': 'origin'}).get_text().replace('来源：', '').strip(),
