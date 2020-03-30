@@ -78,7 +78,9 @@ class DeliverFatcatDisk:
         self.disk_prefix = kwargs.get('disk_prefix', 'pdf/')
         self.disk_suffix = kwargs.get('disk_suffix', '.pdf')
         self.session = requests_retry_session()
-
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 fatcat.DeliverFatcatDisk',
+        })
 
     def run(self, release_json_file):
         sys.stderr.write("Ensuring all 256 base directories exist...\n")
