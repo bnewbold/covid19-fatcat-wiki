@@ -51,7 +51,7 @@ def gen_file_metadata(blob):
         mimetype=mimetype,
     )
 
-def requests_retry_session(retries=10, backoff_factor=3,
+def requests_retry_session(retries=2, backoff_factor=3,
         status_forcelist=(500, 502, 504), session=None):
     """
     From: https://www.peterbe.com/plog/best-practice-with-retries-with-requests
@@ -143,6 +143,8 @@ class DeliverFatcatDisk:
             resp = self.session.get(url)
         except requests.exceptions.RetryError:
             return ('wayback-error', None)
+        except requests.exceptions.TooManyRedirects:
+            return ('too-many-redirects', None)
         if resp.status_code != 200:
             return ('fetch:{}'.format(resp.status_code), None)
         else:
