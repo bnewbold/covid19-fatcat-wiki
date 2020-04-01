@@ -82,7 +82,7 @@ def do_line(row, args):
     print(json.dumps(obj, sort_keys=True))
 
 def run(args):
-    for l in sys.stdin:
+    for l in args.json_file:
         l = json.loads(l)
         do_line(l, args)
 
