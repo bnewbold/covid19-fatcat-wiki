@@ -5,8 +5,16 @@ name = "pypi"
 
 [packages]
 python-magic = "*"
+requests = ">=2"
+python-dotenv = "*"
+Flask = ">=1"
+Flask-Babel = "*"
+elasticsearch-dsl = ">=6.0.0,<7.0.0"
+elasticsearch = ">=6.0.0,<7.0.0"
+sentry-sdk = { version = ">=0.14.0", extras = ["flask"] }
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.7"
