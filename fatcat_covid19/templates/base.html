@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" style="position: relative; min-height: 100%; height: auto;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="origin-when-cross-origin">
+
+  <title>COVID-19 Research Search</title>
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css"
+    crossorigin="anonymous">
+  <style>
+    {# bnewbold: fix light grey bars in header #}
+    .ui.inverted.menu .item:before { background: none; }
+
+    @media only screen and (max-width: 479px) {
+      .mobile-hide{ display: none !important; }
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body style="margin-bottom: 130px;">
+
+<header class="ui fixed inverted menu">
+  <div class="ui container">
+    <a href="/" class="header item">
+      <!-- <img class="logo" src="assets/images/logo.png"> -->
+      <span style="color: red;">COVID-19</span>
+    </a>
+    <a href="https://fatcat.wiki/" class="item mobile-hide">Fatcat</a>
+    <a href="/about" class="item mobile-hide">About</a>
+    <div class="right menu">
+      <div class="item" style="padding: 0;">
+        <form class="" action="/fulltext/search" method="get" role="search" aria-label="Papers">
+          <div class="ui transparent inverted icon input">
+            <i class="search icon" style="padding-right: 2em;"></i>
+            <input type="text" placeholder="Search Papers..." name="q" style="border: 1px solid #777 !important; padding: 5px !important; width: 15em;">
+          </div>
+        </form>
+      </div>
+      <div class="ui simple dropdown item">
+      <!-- language/translate SVG icon -->
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB3aWR0aD0iMTc5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNzgyIDEwNzhxLTEgMy0xMi41LS41dC0zMS41LTExLjVsLTIwLTlxLTQ0LTIwLTg3LTQ5LTctNS00MS0zMS41dC0zOC0yOC41cS02NyAxMDMtMTM0IDE4MS04MSA5NS0xMDUgMTEwLTQgMi0xOS41IDR0LTE4LjUgMHE2LTQgODItOTIgMjEtMjQgODUuNS0xMTV0NzguNS0xMThxMTctMzAgNTEtOTguNXQzNi03Ny41cS04LTEtMTEwIDMzLTggMi0yNy41IDcuNXQtMzQuNSA5LjUtMTcgNXEtMiAyLTIgMTAuNXQtMSA5LjVxLTUgMTAtMzEgMTUtMjMgNy00NyAwLTE4LTQtMjgtMjEtNC02LTUtMjMgNi0yIDI0LjUtNXQyOS41LTZxNTgtMTYgMTA1LTMyIDEwMC0zNSAxMDItMzUgMTAtMiA0My0xOS41dDQ0LTIxLjVxOS0zIDIxLjUtOHQxNC41LTUuNSA2IC41cTIgMTItMSAzMyAwIDItMTIuNSAyN3QtMjYuNSA1My41LTE3IDMzLjVxLTI1IDUwLTc3IDEzMWw2NCAyOHExMiA2IDc0LjUgMzJ0NjcuNSAyOHE0IDEgMTAuNSAyNS41dDQuNSAzMC41em0tMjA1LTQ4NnEzIDE1LTQgMjgtMTIgMjMtNTAgMzgtMzAgMTItNjAgMTItMjYtMy00OS0yNi0xNC0xNS0xOC00MWwxLTNxMyAzIDE5LjUgNXQyNi41IDAgNTgtMTZxMzYtMTIgNTUtMTQgMTcgMCAyMSAxN3ptNjk4IDEyOWw2MyAyMjctMTM5LTQyem0tMTEwOCA4MDBsNjk0LTIzMnYtMTAzMmwtNjk0IDIzM3YxMDMxem0xMjQxLTMxN2wxMDIgMzEtMTgxLTY1Ny0xMDAtMzEtMjE2IDUzNiAxMDIgMzEgNDUtMTEwIDIxMSA2NXptLTUwMy05NjJsNTczIDE4NHYtMzgwem0zMTEgMTMyM2wxNTggMTMtNTQgMTYwLTQwLTY2cS0xMzAgODMtMjc2IDEwOC01OCAxMi05MSAxMmgtODRxLTc5IDAtMTk5LjUtMzl0LTE4My41LTg1cS04LTctOC0xNiAwLTggNS0xMy41dDEzLTUuNXE0IDAgMTggNy41dDMwLjUgMTYuNSAyMC41IDExcTczIDM3IDE1OS41IDYxLjV0MTU3LjUgMjQuNXE5NSAwIDE2Ny0xNC41dDE1Ny01MC41cTE1LTcgMzAuNS0xNS41dDM0LTE5IDI4LjUtMTYuNXptNDQ4LTEwNzl2MTA3OWwtNzc0LTI0NnEtMTQgNi0zNzUgMTI3LjV0LTM2OCAxMjEuNXEtMTMgMC0xOC0xMyAwLTEtMS0zdi0xMDc4cTMtOSA0LTEwIDUtNiAyMC0xMSAxMDYtMzUgMTQ5LTUwdi0zODRsNTU4IDE5OHEyIDAgMTYwLjUtNTV0MzE2LTEwOC41IDE2MS41LTUzLjVxMjAgMCAyMCAyMXY0MTh6Ii8+PC9zdmc+"
+      alt="select language" style="height: 1.5em; filter: invert(100%);">
+      <i class="dropdown icon"></i>
+        <div class="menu">
+          {# TODO #}
+          <a class="item" href="{{ url_for(request.endpoint, lang_code='en') }}">English</a>
+          <a class="item" href="{{ url_for(request.endpoint, lang_code='de') }}">Deutsch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% block fullmain %}
+<!-- 4em top margin is "enough" -->
+<main class="ui main container" style="margin-top: 6em; margin-bottom: 2em;" {% block main_extra_attr %}{% endblock %}>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="ui message">
+    {# Needs more javascript: <i class="close icon"></i> #}
+    <div class="header">Flash Message!</div>
+    <ul class="list">
+    {% for message in messages %}
+      <li>{{ message|safe }}
+    {% endfor %}
+    </ul>
+    </div>
+  {% endif %}
+{% endwith %}
+{% block fullbody %}
+  <div class="ui container text">
+    {% block body %}Nothing to see here.{% endblock %}
+  </div>
+{% endblock %}
+</main>
+{% endblock %}
+
+
+<footer class="ui inverted vertical footer segment" style="margin-top: 2em; padding-top: 2em; padding-bottom:2em; position: absolute; bottom: 0px; width: 100%;">
+  <div class="ui center aligned container">
+    <div class="ui horizontal inverted small divided link list">
+      <a class="item" href="https://fatcat.wiki/">fatcat</a>
+      <a class="item" href="/about">About</a>
+      <a class="item" href="/sources">Sources</a>
+      <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/">Code</a>
+      <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/tree/{{ config.GIT_REVISION }}"><code>{{ config.GIT_REVISION }}</code></a>
+    </div>
+  </div>
+</footer>
+
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous">
+</script>
+<script
+  src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.2/dist/semantic.min.js"
+  crossorigin="anonymous">
+</script>
+{% block postscript %}{% endblock %}
+
+</body>
+</html>

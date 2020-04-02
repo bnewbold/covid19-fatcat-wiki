@@ -1,0 +1,72 @@
+{% import "entity_macros.html" as entity_macros %}
+{% extends "base.html" %}
+
+{% block title %}
+{% if query %}
+  Search: {{ query }}
+{% else %}
+  Fulltext Search
+{% endif %}
+{% endblock %}
+
+
+{% block fullmain %}
+
+<div class="ui vertical stripe segment" style="background-color: #EEE; padding-top: 4.5em;">
+  <div class="ui container text">
+    <h1>Search all COVID-19 Resources</h1>
+    <form class="" role="search" action="/fulltext/search" method="get">
+      <div class="ui form">
+        <div class="ui action input huge fluid">
+          <input type="text" placeholder="Query..." name="q" value="{% if query %}{{ query }}{% endif %}" aria-label="search metadata">
+          <button class="ui primary button">Search</button>
+        </div>
+        <div class="ui checkbox" style="float: right; margin: 1em;">
+          <input type="checkbox" name="fulltext_only" value="true" {% if fulltext_only %}checked{% endif %}>
+          <label>Fulltext Available Only</label>
+        </div>
+        <br>Can also lookup by <b><a href="/release/lookup">identifier</a></b> or search for <b><a href="/container/search?q={{ query or "" }}">containers</a></b> (eg, journals).
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="ui container text">
+<br>
+
+{% if found %}
+{% if found.results %}
+    {{ entity_macros.top_results(found) }}
+
+  {% for paper in found.results %}
+  {{ entity_macros.fulltext_search_result_row(paper) }}
+{% endfor %}
+{% if found.results|length > 8 %}
+  <div class="ui divider"></div>
+  <div style="text-align: center">
+  {{ entity_macros.bottom_results(found)}}
+  </div>
+{% endif %}
+{% else %}
+
+Raw query was: <i>{{ found.query.q }}</i>
+
+<div class="ui centered stackable grid" style="padding-top: 15%;">
+  <div class="row">
+    <div class="four wide column">
+      <img src="/static/paper_man_confused.gif" alt="confused paper man">
+    </div>
+    <div class="six wide column">
+  <h2>No results found!</h2>
+  <p>You could try elsewhere:</p>
+  <ul>
+    <li>Search <a href="https://dissem.in/search?q={{ found.query.q | urlencode }}">dissem.in</a></li>
+    <li>Search <a href="https://www.base-search.net/Search/Results?lookfor={{ found.query.q | urlencode }}">BASE</a></li>
+    <li>Search <a href="https://scholar.google.com/scholar?q={{ found.query.q | urlencode }}">Google Scholar</a></li>
+  </ul>
+</div>
+{% endif %}
+{% endif %}
+
+</div>
+{% endblock %}
