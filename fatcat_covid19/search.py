@@ -24,7 +24,7 @@ def do_search(index, request, limit=30, offset=0, deep_page_limit=2000):
 
     if resp.status_code == 400:
         print("elasticsearch 400: " + str(resp.content))
-        flash("Search query failed to parse; you might need to use quotes.<p><code>{}</code>".format(resp.content))
+        #flash("Search query failed to parse; you might need to use quotes.<p><code>{}</code>".format(resp.content))
         abort(resp.status_code)
     elif resp.status_code != 200:
         print("elasticsearch non-200 status code: " + str(resp.status_code))
