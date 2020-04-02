@@ -74,7 +74,7 @@ def fulltext_to_elasticsearch(row, force_bool=True):
         if full.get('pdftotext_path'):
             t['fulltext']['pdftotext_url'] = "/" + full['pdftotext_path']
         if full.get('thumbnail_path'):
-            t['fulltext']['t_thumbnail_url'] = "/" + full['thumbnail_path']
+            t['fulltext']['thumbnail_url'] = "/" + full['thumbnail_path']
         if full.get('grobid_xml_path'):
             t['fulltext']['grobid_xml_url'] = "/" + full['grobid_xml_path']
 
