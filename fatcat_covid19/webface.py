@@ -23,7 +23,9 @@ class BaseConfig(object):
 
     ELASTICSEARCH_BACKEND = os.environ.get("ELASTICSEARCH_BACKEND", default="https://search.fatcat.wiki")
     ELASTICSEARCH_FULLTEXT_INDEX = os.environ.get("ELASTICSEARCH_FULLTEXT_INDEX", default="covid19_fatcat_fulltext")
+    COVID19_FULLTEXT_HOST = os.environ.get("COVID19_FULLTEXT_HOST", default="https://covid19.fatcat.wiki")
 
+    # this variable is vestigal, used in some jinja2 templates
     FATCAT_DOMAIN = "covid19.fatcat.wiki"
 
     SENTRY_CONFIG = {

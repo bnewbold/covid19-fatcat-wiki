@@ -22,14 +22,13 @@
 </head>
 <body style="margin-bottom: 130px;">
 
-<header class="ui fixed inverted menu">
+<header class="ui fixed inverted menu"> {# style="background-color: #590013;" #}
   <div class="ui container">
-    <a href="/" class="header item">
+    <a href="{{ url_for("search.page_home") }}" class="header item">
       <!-- <img class="logo" src="assets/images/logo.png"> -->
-      <span style="color: red;">COVID-19</span>
+      fatcat &nbsp;<span style="color: red;">[COVID-19]</span>
     </a>
-    <a href="https://fatcat.wiki/" class="item mobile-hide">Fatcat</a>
-    <a href="/about" class="item mobile-hide">About</a>
+    <a href="{{ url_for("search.page_about") }}" class="item mobile-hide">About</a>
     <div class="right menu">
       <div class="item" style="padding: 0;">
         <form class="" action="/fulltext/search" method="get" role="search" aria-label="Papers">
@@ -53,6 +52,23 @@
     </div>
   </div>
 </header>
+
+<div class="ui vertical stripe yellow inverted segment">
+  <div class="ui text container">
+  <div class="ui centered grid" style="padding-top: 2.1em;">
+    <div class="row" style="padding-bottom: 0.5em;">
+      <div class="sixteen wide column" style="font-size: 1.1rem; color: black;">
+      <center>
+        <i class="exclamation triangle icon"></i>
+        <b>{{ _("Prototype") }}:</b>
+        {{ _("These resources do not constitute medical advice or research consensus!") }}
+        <i class="exclamation triangle icon mobile-hide"></i>
+      </center>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
 
 {% block fullmain %}
 <!-- 4em top margin is "enough" -->
@@ -87,6 +103,7 @@
       <a class="item" href="/sources">Sources</a>
       <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/">Code</a>
       <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/tree/{{ config.GIT_REVISION }}"><code>{{ config.GIT_REVISION }}</code></a>
+      <a class="item" href="#" style="color: red;"><b>[COVID-19]</b></a>
     </div>
   </div>
 </footer>

@@ -9,10 +9,10 @@
 
 {% block fullmain %}
 
-<div class ="ui vertical inverted masthead center aligned segment" style="padding-top: 12em; padding-bottom: 10em;">
+<div class ="ui vertical inverted violet masthead center aligned segment" style="padding-top: 7em; padding-bottom: 10em;">
   <div class="ui text container">
     <h1 class="ui header inverted huge centered">
-      {{ _("Search tens of thousands of COVID-19 research papers and documents") }}
+      {{ _("Search Tens of Thousands of COVID-19 Research Papers and Reports") }}
     </h1>
     <br>
     <form class="" action="{{ url_for("search.fulltext_search") }}" method="get" role="search" aria-label="papers" itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
@@ -24,20 +24,6 @@
         </div>
       </div>
     </form>
-  </div>
-</div>
-
-<div class="ui vertical stripe segment" style="background-color: #fffaf3; color: #573a08;">
-  <div class="ui text container">
-  <div class="ui centered grid">
-    <div class="row">
-      <div class="fourteen wide column" style="font-size: 1.1rem;">
-        <b>{{ _("Project Status") }}: {{ _("Prototype") }}</b>
-        &nbsp;
-        {{ _("These resources are not qualified medical advice!") }}
-      </div>
-    </div>
-  </div>
   </div>
 </div>
 
