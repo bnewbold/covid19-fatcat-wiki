@@ -1,4 +1,5 @@
 
+import json
 import datetime
 import requests
 from flask import abort, flash
@@ -32,7 +33,16 @@ def do_search(index, request, limit=30, offset=0, deep_page_limit=2000):
         abort(resp.status_code)
 
     content = resp.json()
-    results = [h['_source'] for h in content['hits']['hits']]
+    #print(json.dumps(content, indent=2))
+    results = []
+    for h in content['hits']['hits']:
+        r = h['_source']
+        r['_highlights'] = []
+        highlights = h.get('highlight', {})
+        for k in highlights:
+            r['_highlights'] += highlights[k]
+        results.append(r)
+    print(json.dumps(results, indent=2))
     for h in results:
         # Handle surrogate strings that elasticsearch returns sometimes,
         # probably due to mangled data processing in some pipeline.
@@ -66,7 +76,25 @@ def do_fulltext_search(q, limit=30, offset=0):
                 "default_operator": "AND",
                 "analyze_wildcard": True,
                 "lenient": True,
-                "fields": ["everything"],
+                "fields": [
+                    "everything",
+                    "abstract",
+                    "fulltext.body",
+                    "fulltext.annex",
+                ],
+            },
+        },
+        "highlight" : {
+            "number_of_fragments" : 3,
+            "fragment_size" : 150,
+            "fields" : {
+                "abstract": { },
+                "fulltext.body": { },
+                "fulltext.annex": { },
+                #"everything": { "number_of_fragments" : 3 },
+                #"fulltext.abstract": { "number_of_fragments" : 3 },
+                #"fulltext.body":     { "number_of_fragments" : 3 },
+                #"fulltext.annex":    { "number_of_fragments" : 3 },
             },
         },
     }

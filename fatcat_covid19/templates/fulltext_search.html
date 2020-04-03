@@ -38,8 +38,8 @@
     <div class="ui container text" style="padding: 1em;">
       {{ entity_macros.top_results(found) }}
     </div>
-    <div class="ui container">
-      <div class="ui centered grid">
+    <div class="ui container" style="max-width: 950px !important;">
+      <div class="ui centered stackable grid">
         {% for paper in found.results %}
           {{ entity_macros.fulltext_search_result_row(paper) }}
         {% endfor %}
