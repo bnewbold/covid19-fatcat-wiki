@@ -12,7 +12,7 @@ import requests
 from flask import abort, flash
 from fatcat_covid19.webface import app
 
-def do_search(index, request, limit=30, offset=0, deep_page_limit=2000):
+def do_search(index, request, limit=25, offset=0, deep_page_limit=2000):
 
     # Sanity checks
     if limit > 100:
@@ -64,7 +64,7 @@ def do_search(index, request, limit=30, offset=0, deep_page_limit=2000):
             "offset": offset,
             "deep_page_limit": deep_page_limit}
 
-def do_fulltext_search(q, limit=30, offset=0):
+def do_fulltext_search(q, limit=25, offset=0):
 
     #print("Search hit: " + q)
     if limit > 100:
