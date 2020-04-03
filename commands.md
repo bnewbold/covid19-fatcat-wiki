@@ -10,8 +10,8 @@ Fetch and transform metadata:
     mkdir -p metadata fulltext_web
     wget https://archive.org/download/s2-cord19-dataset/cord19.2020-03-27.csv
     mv cord19.2020-03-27.csv metadata
-    ./scripts/parse_cord19_csv.py metadata/cord19.2020-03-27.csv > metadata/cord19.2020-03-27.json
-    cat metadata/cord19.2020-03-27.json | parallel -j10 --linebuffer --round-robin --pipe ./scripts/cord19_fatcat_enrich.py - | pv -l > metadata/cord19.2020-03-27.enrich.json
+    ./bin/parse_cord19_csv.py metadata/cord19.2020-03-27.csv > metadata/cord19.2020-03-27.json
+    cat metadata/cord19.2020-03-27.json | parallel -j10 --linebuffer --round-robin --pipe ./bin/cord19_fatcat_enrich.py - | pv -l > metadata/cord19.2020-03-27.enrich.json
     cat metadata/cord19.2020-03-27.enrich.json | jq 'select(.release_id == null) | .cord19_paper' -c > metadata/cord19.2020-03-27.missing.json
 
 Existing fatcat ES transform:
@@ -21,7 +21,7 @@ Existing fatcat ES transform:
 
 Download fulltext from wayback:
 
-    cat metadata/cord19.2020-03-27.enrich.json | jq .fatcat_release -c | parallel -j20 --linebuffer --round-robin --pipe ./scripts/deliver_file2disk.py --disk-dir fulltext_web - | pv -l > fatcat_web_20200327.log
+    cat metadata/cord19.2020-03-27.enrich.json | jq .fatcat_release -c | parallel -j20 --linebuffer --round-robin --pipe ./bin/deliver_file2disk.py --disk-dir fulltext_web - | pv -l > fatcat_web_20200327.log
 
 Extract text from PDFs:
 
@@ -42,12 +42,20 @@ Convert GROBID XML to JSON:
 
 Create large derivatives file (including extracted fulltext):
 
-    ./cord19_fatcat_derivatives.py metadata/cord19.2020-03-27.enrich.json --base-dir fulltext_web/ | pv -l > fulltext.json
+    ./cord19_fatcat_derivatives.py metadata/cord19.2020-03-27.enrich.json --base-dir fulltext_web/ | pv -l > metadata/cord19.2020-03-27.fulltext.json
 
-    cat fulltext.json | jq .fulltext_status -r | sort | uniq -c | sort -nr
+    cat metadata/cord19.2020-03-27.fulltext.json | jq .fulltext_status -r | sort | uniq -c | sort -nr
 
 
 ## ES Indices
+
+Create fulltext index, transform to ES schema and index:
+
+    # if existing, first: http delete :9200/covid19_fatcat_fulltext
+    http put :9200/covid19_fatcat_fulltext < schema/fulltext_schema.v00.json
+
+    # in fatcat_covid19, pipenv shell
+    ./elastic_transform.py metadata/cord19.2020-03-27.fulltext.json | pv -l | esbulk -verbose -size 1000 -id fatcat_ident -w 8 -index covid19_fatcat_fulltext -type release
 
 Create and index existing `fatcat_release` schema:
 
@@ -55,15 +63,7 @@ Create and index existing `fatcat_release` schema:
 
     # in fatcat python directory, pipenv shell
     export LC_ALL=C.UTF-8
-    cat /srv/covid19.fatcat.wiki/src/metadata/cord19.2020-03-27.enrich.json | jq .fatcat_release -c | rg -v '^null$' | pv -l | ./fatcat_transform.py elasticsearch-releases - - | esbulk -verbose -size 1000 -id ident -w 8 -index covid19_fatcat_release -type release
-
-Create fulltext index:
-
-    http put :9200/covid19_fatcat_fulltext < schema/fulltext_schema_v00.json
-
-Transform to ES schema and index:
-
-    ./elastic_transform.py cord19.2020-03-27.fulltext.json | pv -l | esbulk -verbose -size 1000 -id fatcat_ident -w 8 -index covid19_fatcat_fulltext -type release
+    cat /srv/fatcat_covid19/src/metadata/cord19.2020-03-27.enrich.json | jq .fatcat_release -c | rg -v '^null$' | pv -l | ./fatcat_transform.py elasticsearch-releases - - | esbulk -verbose -size 1000 -id ident -w 8 -index covid19_fatcat_release -type release
 
 ## GROBID Processing
 
