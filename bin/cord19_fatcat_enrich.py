@@ -3,6 +3,8 @@
 """
 Takes a JSON-transformed CORD-19 *metadata* file and enriches it with fatcat
 metadata.
+
+TODO: refactor into `fatcat_covid19` module and wrapper CLI script.
 """
 
 import sys

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+Wrapper CLI tool for invoking code in the `fatcat_covid19` module.
+
+Licensed the same as code under fatcat_covid19/
+"""
+
 import sys
 import argparse
 

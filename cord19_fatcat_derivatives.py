@@ -27,6 +27,8 @@ Keys added:
     - glutton_fatcat_release (renamed from fatcat_release)
 - fulltext_pdftotext: only if fulltext_grobid not set
     - body
+
+TODO: refactor into fatcat_covid19 module and CLI wrapper
 """
 
 import sys

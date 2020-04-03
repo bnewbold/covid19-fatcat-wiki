@@ -1,4 +1,11 @@
 
+"""
+Helpers to make elasticsearch queries.
+
+TODO: switch to using elasticsearch-dsl library instead of requests+json.
+already have a WIP branch for this in fatcat repo.
+"""
+
 import json
 import datetime
 import requests

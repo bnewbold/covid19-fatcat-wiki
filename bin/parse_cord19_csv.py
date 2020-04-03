@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+"""
+Trivial helper to transform the CORD-19 CSV file to JSON, and rename a couple
+of the column keys.
+"""
+
 import sys
 import csv
 import json

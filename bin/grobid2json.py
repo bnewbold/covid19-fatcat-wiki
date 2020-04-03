@@ -21,6 +21,8 @@ A flag can be specified to disable copyright encumbered bits (--no-emcumbered):
 - tables, figures, equations
 
 Prints JSON to stdout, errors to stderr
+
+This file copied from the sandcrawler repository.
 """
 
 import io
