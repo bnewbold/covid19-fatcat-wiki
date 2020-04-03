@@ -103,9 +103,10 @@
 <footer class="ui inverted vertical footer segment" style="margin-top: 2em; padding-top: 2em; padding-bottom:2em; position: absolute; bottom: 0px; width: 100%;">
   <div class="ui center aligned container">
     <div class="ui horizontal inverted small divided link list">
-      <a class="item" href="https://fatcat.wiki/">fatcat</a>
-      <a class="item" href="/about">{{ _("About") }}</a>
-      <a class="item" href="/sources">{{ _("Sources") }}</a>
+      <a class="item" href="{{ url_for("search.page_home") }}">Home</a>
+      <a class="item" href="{{ url_for("search.page_about") }}">{{ _("About") }}</a>
+      <a class="item" href="{{ url_for("search.page_sources") }}">{{ _("Sources") }}</a>
+      <a class="item" href="https://fatcat.wiki/">Fatcat</a>
       <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/">{{ _("Code") }}</a>
       <a class="item" href="https://github.com/bnewbold/covid19-fatcat-wiki/tree/{{ config.GIT_REVISION }}"><code>{{ config.GIT_REVISION }}</code></a>
       <a class="item" href="#" style="color: red;"><b>[COVID-19]</b></a>

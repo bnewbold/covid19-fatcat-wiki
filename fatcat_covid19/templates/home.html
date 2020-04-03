@@ -27,47 +27,32 @@
   </div>
 </div>
 
-{#
+<div class="ui vertical stripe segment" style="padding-top: 2em; padding-bottom: 2em; background-color: #F5F5F5;">
+  <div class="ui text container" style="max-width: 800px!important;">
+    <p><b>
+    This is a prototype full text search index of papers, reports,
+    datasets, and other research resources related to the COVID-19 crisis,
+    including public health responses to influenza pandemics more
+    generally.
+    &nbsp;<a href="/about">Read more...</a>
+    </b>
+  </div>
+</div>
+
 <div class="ui vertical stripe segment" style="padding-top: 2em; padding-bottom: 2em;">
   <div class="ui text container" style="max-width: 800px!important;">
   <div class="ui centered grid">
     <div class="row">
-      <div class="four wide column">
-        <!-- TODO: don't let it scale down -->
-        <img src="/static/paper_man_confused.gif" width="130" alt="confused paper man">
-      </div>
       <div class="twelve wide column" style="font-size: 1.2rem;">
-        <p><b>Fatcat is a versioned, user-editable catalog of research
-        publications including journal articles, conference proceedings, and
-        datasets</b>
-        <p>Features include archival file-level metadata (verified digests and
-        long-term copies), an
-        <b><a href="https://api.{{ config.FATCAT_DOMAIN }}">open, documented API</a></b>,
-        and work/release indexing (eg, distinguishing between and linking
-        pre-prints, manuscripts, and version-of-record).
-        &nbsp;<a href="/about">Read more...</a>
-      </div>
-    </div>
-  </div>
-  </div>
-</div>
-#}
-
-<div class="ui vertical stripe segment" style="padding-top: 2em; padding-bottom: 2em; background-color: #F5F5F5;">
-  <div class="ui text container" style="max-width: 800px!important;">
-  <div class="ui centered grid">
-    <div class="row">
-      <div class="twelve wide column" style="font-size: 1.2rem;">
-        <p>This service is hosted at <b><a
-        href="https://archive.org">The Internet Archive</a></b>, a US
-        non-profit dedicated to providing Universal Access to All Knowledge.
-        {#
-        <a href="https://archive.org/donate/">Donations welcome!</a>
-        <p>Development funding comes from
-        <b><a href="https://blog.archive.org/2018/03/05/andrew-w-mellon-foundation-awards-grant-to-the-internet-archive-for-long-tail-journal-preservation/">The Andrew Mellon Foundation</a></b>
-        to improve preservation and access to "long-tail" open access works on
-        the public web which might otherwise be lost.
-        #}
+        <p>{{ _("This service is hosted at") }}
+        <b><a href="https://archive.org">The Internet Archive</a></b>,
+        {{ _("a US non-profit dedicated to providing Universal Access to All Knowledge") }}.
+        <p>
+        {{ _("Metadata and content comes from the intersection of public curated COVID-19 publication lists (like the") }}
+        <a href="https://pages.semanticscholar.org/coronavirus-research">Allen Institute for AI CORD-19 corpus</a>
+        {{ _("and the") }} <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov">WHO database of publications on coronavirus disease</a>)
+        {{ _("and the") }} <a href="https://fatcat.wiki">Fatcat</a>
+        {{ _("open catalog of research publications on the scholarly web") }}.
       </div>
       <div class="four wide column">
         <img src="/static/ia_logo_text.png" width="140" alt="IA logo">
