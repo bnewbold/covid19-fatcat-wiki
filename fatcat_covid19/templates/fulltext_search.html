@@ -3,9 +3,9 @@
 
 {% block title %}
 {% if query %}
-  Search: {{ query }}
+  {{ _("Search") }}: {{ query }}
 {% else %}
-  Fulltext Search
+  {{ _("Fulltext Search") }}
 {% endif %}
 {% endblock %}
 
@@ -19,13 +19,15 @@
       <div class="ui form">
         <div class="ui action input huge fluid">
           <input type="text" placeholder="Query..." name="q" value="{% if query %}{{ query }}{% endif %}" aria-label="search metadata">
-          <button class="ui primary button">Search</button>
+          <button class="ui primary button">{{ _("Search") }}</button>
         </div>
+        {#
         <div class="ui checkbox" style="float: right; margin: 1em;">
           <input type="checkbox" name="fulltext_only" value="true" {% if fulltext_only %}checked{% endif %}>
           <label>Fulltext Available Only</label>
         </div>
         <br>Can also lookup by <b><a href="/release/lookup">identifier</a></b> or search for <b><a href="/container/search?q={{ query or "" }}">containers</a></b> (eg, journals).
+        #}
       </div>
     </form>
   </div>
@@ -58,22 +60,23 @@
     {# "did a query, but no results" #}
     <div class="ui container text">
       <br>
-      Raw query was: <i>{{ found.query.q }}</i>
+      {{ _("Raw query was:") }} <i>{{ found.query.q }}</i>
 
       <div class="ui centered stackable grid" style="padding-top: 15%;">
         <div class="row">
-          {#
+          <h2>{{ _("No results found!") }}</h2>
+        </div>
+        <div class="row">
           <div class="four wide column">
             <img src="/static/paper_man_confused.gif" alt="confused paper man">
           </div>
-          #}
           <div class="six wide column">
-            <h2>No results found!</h2>
-            <p>You could try elsewhere:</p>
+            <br>
+            <p>{{ _("Try searching elsewhere") }}:</p>
             <ul>
-            <li>Search <a href="https://dissem.in/search?q={{ found.query.q | urlencode }}">dissem.in</a></li>
-            <li>Search <a href="https://www.base-search.net/Search/Results?lookfor={{ found.query.q | urlencode }}">BASE</a></li>
-            <li>Search <a href="https://scholar.google.com/scholar?q={{ found.query.q | urlencode }}">Google Scholar</a></li>
+            <li><a href="https://www.ncbi.nlm.nih.gov/research/coronavirus/docsum?text={{ found.query.q | urlencode }}">NIH LitCovid</a></li>
+            <li><a href="https://cord-19.apps.allenai.org/?q={{ found.query.q | urlencode }}">Allen AI CORD-19 Explorer</a></li>
+            <li><a href="https://scholar.google.com/scholar?q={{ found.query.q | urlencode }}">Google Scholar</a></li>
             </ul>
           </div>
         </div>

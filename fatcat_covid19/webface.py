@@ -16,7 +16,11 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 
 class BaseConfig(object):
 
-    SUPPORTED_LANGUAGES = {'en': 'English', 'de': 'Deutsch'}
+    SUPPORTED_LANGUAGES = {
+        'en': 'English',
+        'de': 'Deutsch',
+        'zh': '中文',
+    }
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
     GIT_REVISION = subprocess.check_output(["git", "describe", "--always"]).strip().decode('utf-8')
@@ -86,7 +90,7 @@ def page_about():
 
 @bp.route('/sources', methods=['GET'])
 def page_sources():
-    return render_template('sources.html')
+    return render_template('sources_{}.html'.format(g.lang_code))
 
 
 @bp.errorhandler(404)
