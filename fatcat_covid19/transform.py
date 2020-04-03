@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-
-"""
-Takes *enriched* JSON objects which include fatcat metadata and fulltext
-content, and outputs JSON lines in fatcat_fulltext schema.
-"""
 
 import sys
 import json
@@ -198,26 +192,13 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
     return t
 
-def run(args):
-    for l in args.json_file:
+def transform_es_file(json_input, json_output):
+    """
+    Takes *enriched* JSON objects which include fatcat metadata and fulltext
+    content, and outputs JSON lines in fatcat_fulltext schema.
+    """
+    for l in json_input:
         l = json.loads(l)
         result = fulltext_to_elasticsearch(l, args)
         if result:
-            print(json.dumps(result, sort_keys=True))
-
-def main():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('json_file',
-        help="fulltext content input",
-        type=argparse.FileType('r'))
-    subparsers = parser.add_subparsers()
-
-    args = parser.parse_args()
-    args.session = requests_retry_session()
-
-    run(args)
-
-if __name__ == '__main__':
-    main()
-
+            print(json.dumps(result, sort_keys=True), file=json_output)

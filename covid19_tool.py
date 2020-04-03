@@ -10,6 +10,8 @@ import sys
 import argparse
 
 from fatcat_covid19.webface import app
+from fatcat_covid19.derivatives import enrich_derivatives_file
+from fatcat_covid19.transform import transform_es_file
 
 
 def main():
@@ -58,6 +60,16 @@ def main():
         help="directory to look for files (in 'pdf' subdirectory)",
         default="fulltext_web")
 
+    sub_transform_es = subparsers.add_parser('transform-es',
+        help="transform fulltext JSON to elasticsearch schema JSON")
+    sub_transform_es.add_argument('json_file',
+        help="input JSON rows file (fulltext)",
+        type=argparse.FileType('r'))
+    sub_transform_es.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('r'),
+        default=sys.stdout)
+
     args = parser.parse_args()
 
     if args.action == 'webface':
@@ -65,6 +77,8 @@ def main():
     if args.action == 'derivatives':
         enrich_derivatives_file(args.json_file, args.json_output,
             args.base_dir)
+    if args.action == 'transform-es':
+        transform_es_file(args.json_file, args.json_output)
     else:
         print("tell me what to do!")
         sys.exit(-1)
