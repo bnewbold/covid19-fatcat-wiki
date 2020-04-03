@@ -132,6 +132,7 @@ def fulltext_to_elasticsearch(row, force_bool=True):
     if container:
         t['publisher'] = container.get('publisher')
         t['container_name'] = container.get('name')
+        t['container_original_name'] = container.get('original_name')
         # this is container.ident, not release.container_id, because there may
         # be a redirect involved
         t['container_id'] = container['ident']
