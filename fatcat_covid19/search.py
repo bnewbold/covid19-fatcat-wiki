@@ -42,7 +42,7 @@ def do_search(index, request, limit=30, offset=0, deep_page_limit=2000):
         for k in highlights:
             r['_highlights'] += highlights[k]
         results.append(r)
-    print(json.dumps(results, indent=2))
+    #print(json.dumps(results, indent=2))
     for h in results:
         # Handle surrogate strings that elasticsearch returns sometimes,
         # probably due to mangled data processing in some pipeline.
