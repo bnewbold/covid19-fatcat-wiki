@@ -50,6 +50,8 @@ def fulltext_to_elasticsearch(row, force_bool=True):
         'pages',
         'number',
         'license',
+    ]
+    EXT_IDS = [
         'doi',
         'pmid',
         'pmcid',
@@ -61,6 +63,8 @@ def fulltext_to_elasticsearch(row, force_bool=True):
     ]
     for key in BIBLIO_KEYS:
         t[key] = release.get(key) or None
+    for key in EXT_IDS:
+        t[key] = release['ext_ids'].get(key) or None
 
     abstracts = []
     abstract_langs = []
