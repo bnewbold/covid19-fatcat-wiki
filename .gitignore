@@ -1,5 +1,8 @@
 data/
-fulltext_*/
+metadata/
+fulltext_web/
+fulltext_cnki/
+fulltext_wanfang/
 
 *.o
 *.a
