@@ -4,8 +4,64 @@
 
 {% block body %}
 
-<h1>{{ _("Sources of Content and Metadata") }}</h1>
+<h2>Curated COVID-19 Sources</h2>
 
-TODO
+Works are tagged with the source of their inclusion in this COVID-19 corpus:
+
+<ul>
+  <li><a href="https://pages.semanticscholar.org/coronavirus-research">Allen Institute for AI CORD-19 corpus</a>
+  <li><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov">WHO Database of publications on coronavirus disease (COVID-19)</a>
+  <li><a href="http://subject.med.wanfangdata.com.cn/Channel/7">Wanfang corpus of Chinese COVID-19 papers</a>
+  <li><a href="http://en.gzbd.cnki.net/GZBT/brief/Default.aspx">CNKI corpus of Chinese COVID-19 papers</a>
+  <li><a href="https://fatcat.wiki">Fatcat</a> (based on keyword queries against the full catalog)
+</ul>
+
+To clarify use of the CORD-19 corpus in particular, the corpus is used only to
+identify papers for inclusion in this index (eg, by DOI or PMCID).
+Bibliographic metadata and content is then fetched from the exiting Fatcat
+catalog of open metadata, and full-text content is indexed from copies found on
+the public web, repositories, and publisher websites.
+
+<h2>Disclaimers</h2>
+
+<p>
+The fatcat catalog is intended to be a "universal" preservation and access
+archive, not a narrow currated collection of only the highest quality research
+content. This means that not all content has undergone peer-review, and some
+may have been uploaded to services like academic social networks (eg,
+researchgate) or institutional repositories with absolutely no human editorial
+review or filtering.
+
+<p>
+The catalog intends to capture metadata such as publication stage (draft,
+published, retracted), venue, and medium (journal article, web post,
+encyclopedia entry, frontmatter) to help filter through this content. But in
+some cases this metadata is incomplete or may be inaccurate. For example,
+pre-print PDF files may be incorrectly associated with the final published
+version of a work, or vica versa.
+
+
+<h2>Sources of Metadata</h2>
+
+The source of all bibliographic information is recorded in edit history
+metadata, which allows the provenance of all records to be reconstructed. A few
+major sources are worth highlighting here:
+
+<ul>
+ <li>Release metadata from <b>Crossref</b>, via their public
+ <a href="https://github.com/CrossRef/rest-api-doc">REST API</a>
+ <li>Release metadata and linked full-text content from NIH <b>Pubmed</b> and <b><a href="https://arxiv.org">arXiv.org</a></b>
+ <li>Release metadata and linked public domain full-text content the <b>JSTOR</b> Early Journal Content collection
+ <li>Creator names and de-duplication from <b>ORCID</b>, via their annual public data releases
+ <li>Journal title metadata from <b>DOAJ</b>, <b>ISSN ROAD</b>, and <b>SHERPA/RoMEO</b>
+ <li>Full-text URL lists from <b><a href="https://core.ac.uk">CORE</a></b>,
+ <b><a href="http://unpaywall.org">Unpaywall</a></b>,
+ <b><a href="https://www.semanticscholar.org">Semantic Scholar</a></b>,
+ <b><a href="https://citeseerx.ist.psu.edu">CiteseerX</a></b>,
+ and <b><a href="https://www.microsoft.com/en-us/research/project/academic">Microsoft Academic Graph</a></b>.
+ <li><a href="https://guide.fatcat.wiki/sources.html">The Fatcat Guide</a> lists more major sources
+</ul>
+
+Many thanks for the hard work of all these projects, institutions, and individuals!
 
 {% endblock %}
