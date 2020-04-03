@@ -45,13 +45,14 @@
         "fulltext.body",
         "fulltext.acknowledgment",
         "fulltext.annex",
+        "biblio_all",
         "everything"
       ]
     },
     "properties": {
         "fatcat_ident":     { "type": "keyword", "normalizer": "default", "doc_values": false },
         "fatcat_revision":  { "type": "keyword", "normalizer": "default", "doc_values": false },
-        "cord19_uid":       { "type": "keyword", "normalizer": "default", "doc_values": false },
+        "source_tags":      { "type": "keyword", "normalizer": "default", "doc_values": false },
 
         "work_id":        { "type": "keyword", "normalizer": "default" },
         "title":          { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch", "copy_to": ["biblio_all", "everything"] },
@@ -80,6 +81,8 @@
         "jstor_id":       { "type": "keyword", "normalizer": "default", "doc_values": false },
         "mag_id":         { "type": "keyword", "normalizer": "default", "doc_values": false },
         "s2_id":          { "type": "keyword", "normalizer": "default", "doc_values": false },
+        "cord19_uid":     { "type": "keyword", "normalizer": "default", "doc_values": false },
+        "who_covidence_id": { "type": "keyword", "normalizer": "default", "doc_values": false },
         "license":        { "type": "keyword", "normalizer": "default" },
         "publisher":            { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch" },
         "publisher_type":       { "type": "keyword", "normalizer": "default" },
@@ -106,6 +109,7 @@
             "acknowledgement":  { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch", "copy_to": "everything", "store": true },
             "annex":            { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch", "copy_to": "everything", "store": true },
 
+            "ia_pdf_url":       { "type": "keyword", "normalizer": "default", "doc_values": false },
             "pdf_url":          { "type": "keyword", "normalizer": "default", "doc_values": false },
             "pdf_sha1":         { "type": "keyword", "normalizer": "default", "doc_values": false },
             "thumbnail_url":    { "type": "keyword", "normalizer": "default", "doc_values": false },
@@ -115,7 +119,7 @@
         },
 
         "everything":           { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch" },
-        "biblio_all":               { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch" },
+        "biblio_all":           { "type": "text", "index": true, "analyzer": "textIcu", "search_analyzer":"textIcuSearch" },
 
         "affiliation":    { "type": "alias", "path": "affiliations" },
         "author":         { "type": "alias", "path": "contrib_names" },
@@ -126,7 +130,9 @@
         "lang":           { "type": "alias", "path": "language" },
         "stage":          { "type": "alias", "path": "release_stage" },
         "type":           { "type": "alias", "path": "release_type" },
+        "country":        { "type": "alias", "path": "country_code" },
 
+        "source":         { "type": "alias", "path": "source_tags" },
         "body":           { "type": "alias", "path": "fulltext.body" }
 
     }

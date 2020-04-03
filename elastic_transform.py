@@ -28,6 +28,9 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
     release = row['fatcat_release']
 
+    abstracts = []
+    abstract_langs = []
+
     # first, easy fatcat metadata
     t = {
         'fatcat_ident': release['ident'],
@@ -66,51 +69,12 @@ def fulltext_to_elasticsearch(row, force_bool=True):
     for key in EXT_IDS:
         t[key] = release['ext_ids'].get(key) or None
 
-    abstracts = []
-    abstract_langs = []
-
-    # then the fulltext stuff
-    t['fulltext']['status'] = row.get('fulltext_status', 'none')
-    if 'fulltext_file' in row:
-        full = row['fulltext_file']
-        t['fulltext']['sha1'] = full['sha1']
-        t['fulltext']['pdf_url'] = "/" + full['pdf_path']
-        if full.get('pdftotext_path'):
-            t['fulltext']['pdftotext_url'] = "/" + full['pdftotext_path']
-        if full.get('thumbnail_path'):
-            t['fulltext']['thumbnail_url'] = "/" + full['thumbnail_path']
-        if full.get('grobid_xml_path'):
-            t['fulltext']['grobid_xml_url'] = "/" + full['grobid_xml_path']
-
-    if 'fulltext_grobid' in row:
-        grobid = row['fulltext_grobid']
-        if grobid.get('abstract'):
-            abstracts.append(grobid['abstract'])
-            abstract_langs.append(grobid['language_code'])
-        t['fulltext']['abstract'] = grobid.get('abstract', None)
-        t['fulltext']['body'] = grobid.get('body', None)
-        t['fulltext']['acknowledgement'] = grobid.get('acknowledgement', None)
-        t['fulltext']['annex'] = grobid.get('annex', None)
-        t['fulltext']['lang'] = grobid.get('language_code', None)
-    elif 'fulltext_pdftotext' in row:
-        pdftotext = row['fulltext_pdftotext']
-        t['fulltext']['body'] = pdftotext.get('body', None)
-
-    if 'cord19_paper' in row:
-        paper = row['cord19_paper']
-        t['cord19_uid'] = paper['cord_uid']
-        if paper.get('abstract'):
-            abstracts.append(paper['abstract'])
-
     t['contrib_count'] = len(release['contribs'] or [])
 
     if release.get('abstracts'):
         for a in release['abstracts']:
             abstracts.append(a['content'])
             abstract_langs.append(a['lang'])
-    
-    t['abstract'] = abstracts
-    t['abstract_lang'] = list(set(abstract_langs))
 
     contrib_names = []
     contrib_affiliations = []
@@ -180,6 +144,57 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
     if t['doi']:
         t['doi_prefix'] = t['doi'].split('/')[0]
+
+    # then the fulltext stuff
+    t['fulltext']['status'] = row.get('fulltext_status', 'none')
+    if 'fulltext_file' in row:
+        full = row['fulltext_file']
+        t['fulltext']['sha1'] = full['sha1']
+        t['fulltext']['pdf_url'] = "/" + full['pdf_path']
+        if full.get('pdftotext_path'):
+            t['fulltext']['pdftotext_url'] = "/" + full['pdftotext_path']
+        if full.get('thumbnail_path'):
+            t['fulltext']['thumbnail_url'] = "/" + full['thumbnail_path']
+        if full.get('grobid_xml_path'):
+            t['fulltext']['grobid_xml_url'] = "/" + full['grobid_xml_path']
+
+    if 'fulltext_grobid' in row:
+        grobid = row['fulltext_grobid']
+        if grobid.get('abstract'):
+            abstracts.append(grobid['abstract'])
+            abstract_langs.append(grobid['language_code'])
+        t['fulltext']['abstract'] = grobid.get('abstract', None)
+        t['fulltext']['body'] = grobid.get('body', None)
+        t['fulltext']['acknowledgement'] = grobid.get('acknowledgement', None)
+        t['fulltext']['annex'] = grobid.get('annex', None)
+        t['fulltext']['lang'] = grobid.get('language_code', None)
+    elif 'fulltext_pdftotext' in row:
+        pdftotext = row['fulltext_pdftotext']
+        t['fulltext']['body'] = pdftotext.get('body', None)
+
+    # then other metadata stuff
+    if row.get('source_tags'):
+        # will get set-uniq at the end
+        t['source_tags'] = row['source_tags']
+    else:
+        t['source_tags'] = []
+
+    if 'cord19_paper' in row:
+        t['source_tags'].append('cord19')
+        paper = row['cord19_paper']
+        t['cord19_uid'] = paper['cord_uid']
+        if paper.get('who_covidence_id'):
+            t['who_covidence_id'] = paper['who_covidence_id']
+            t['source_tags'].append('who')
+        if paper.get('abstract') and not abstracts:
+            abstracts.append(paper['abstract'])
+        if not t['license']:
+            t['license'] = paper.get('license') or None
+    
+    t['abstract'] = abstracts
+    t['abstract_lang'] = list(set(abstract_langs))
+
+    t['source_tags'] = list(set(t['source_tags']))
 
     return t
 
