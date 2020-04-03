@@ -17,4 +17,5 @@ with open(CSVFILE, newline='') as csvfile:
         row = dict(row)
         row['mag_id'] = row.pop('Microsoft Academic Paper ID')
         row['who_covidence_id'] = row.pop('WHO #Covidence').replace('#', '')
-        print(json.dumps(row, sort_keys=True))
+        obj = dict(cord19_paper=row)
+        print(json.dumps(obj, sort_keys=True))

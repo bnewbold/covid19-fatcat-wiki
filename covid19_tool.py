@@ -70,14 +70,26 @@ def main():
         type=argparse.FileType('r'),
         default=sys.stdout)
 
+    sub_enrich_fatcat = subparsers.add_parser('enrich-fatcat',
+        help="lookup fatcat releases from JSON metadata")
+    sub_enrich_fatcat.add_argument('json_file',
+        help="input JSON rows file (eg, CORD-19 parsed JSON)",
+        type=argparse.FileType('r'))
+    sub_enrich_fatcat.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('r'),
+        default=sys.stdout)
+
     args = parser.parse_args()
 
     if args.action == 'webface':
         app.run(debug=args.debug, host=args.host, port=args.port)
-    if args.action == 'derivatives':
+    elif args.action == 'derivatives':
         enrich_derivatives_file(args.json_file, args.json_output,
             args.base_dir)
-    if args.action == 'transform-es':
+    elif args.action == 'transform-es':
+        transform_es_file(args.json_file, args.json_output)
+    elif args.action == 'enrich-fatcat':
         transform_es_file(args.json_file, args.json_output)
     else:
         print("tell me what to do!")
