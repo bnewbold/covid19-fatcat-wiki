@@ -4,6 +4,19 @@ layout:
 - python code/libs in sub-directory
 - single-file flask with all routes, call helper routines
 
+prototype pipeline:
+- CORD-19 dataset
+- enrich script fetches fatcat metadata, outputs combined .json
+- download + derive manually
+- transform script (based on download) creates ES documents as JSON
+
+pipeline:
+- .json files with basic metadata from each source
+    => CORD-19
+    => fatcat ES queries
+    => manual addition
+- enrich script takes all the above, does fatcat lookups, de-dupes by release ident, dumps json with tags and extra metadata
+
 design:
 - elasticschema schema
 - i18n URL schema
@@ -33,7 +46,7 @@ papers:
 - WHO reports and recommendations
 - "hammer and the dance" blog-post
 - korean, chinese, singaporean reports
-
+- http://subject.med.wanfangdata.com.cn/Channel/7?mark=34
 
 
 tools?
