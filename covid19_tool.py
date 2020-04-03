@@ -37,7 +37,7 @@ def main():
         help="listen on this port")
 
     sub_enrich = subparsers.add_parser('enrich',
-        help="enrich CORD-19 dataset (JSON) with fatcat metadata (prints to stdout)")
+        help="enrich CORD-19 dataset (JSON) with fatcat metadata")
     sub_enrich.set_defaults(
         action='enrich',
     )
@@ -45,13 +45,26 @@ def main():
         help="CORD-19 parsed JSON file",
         type=argparse.FileType('r'))
 
+    sub_derivatives = subparsers.add_parser('derivatives',
+        help="enrich JSON rows with existing derivative files")
+    sub_derivatives.add_argument('json_file',
+        help="enriched (with fatcat_release) metadata file",
+        type=argparse.FileType('r'))
+    sub_derivatives.add_argument('--json-output',
+        help="file to write ",
+        type=argparse.FileType('r'),
+        default=sys.stdout)
+    sub_derivatives.add_argument('--base-dir',
+        help="directory to look for files (in 'pdf' subdirectory)",
+        default="fulltext_web")
+
     args = parser.parse_args()
 
     if args.action == 'webface':
         app.run(debug=args.debug, host=args.host, port=args.port)
-    if args.action == 'enrich':
-        # TODO
-        pass
+    if args.action == 'derivatives':
+        enrich_derivatives_file(args.json_file, args.json_output,
+            args.base_dir)
     else:
         print("tell me what to do!")
         sys.exit(-1)

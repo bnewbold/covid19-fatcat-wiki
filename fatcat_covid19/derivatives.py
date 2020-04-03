@@ -1,35 +1,3 @@
-#!/usr/bin/env python3
-
-"""
-Takes *enriched* JSON objects which include a fatcat_release key/entity, and
-populate fulltext content and metadata.
-
-This script *only* looks for existing local files.
-
-Keys added:
-
-- fulltext_status: whether we could fetch or not (always added)
-- fulltext_file: fatcat file entity, plus
-    - pdf_path
-    - pdftotext_path (if exists)
-    - thumbnail_path (if exists)
-    - grobid_xml_path (if exists)
-    - grobid_json_path (if exists)
-- fulltext_grobid: grobid2json format, including:
-    - title
-    - authors
-    - journal
-    - abstract
-    - body
-    - acknowledgement
-    - annex
-    - language_code
-    - glutton_fatcat_release (renamed from fatcat_release)
-- fulltext_pdftotext: only if fulltext_grobid not set
-    - body
-
-TODO: refactor into fatcat_covid19 module and CLI wrapper
-"""
 
 import sys
 import json
@@ -39,7 +7,35 @@ import datetime
 from fatcat_covid19.common import *
 
 
-def do_line(row, args):
+def enrich_derivatives_row(row, base_dir):
+    """
+    Takes *enriched* JSON objects which include a fatcat_release key/entity, and
+    populate fulltext content and metadata.
+
+    This script *only* looks for existing local files.
+
+    Keys added:
+
+    - fulltext_status: whether we could fetch or not (always added)
+    - fulltext_file: fatcat file entity, plus
+        - pdf_path
+        - pdftotext_path (if exists)
+        - thumbnail_path (if exists)
+        - grobid_xml_path (if exists)
+        - grobid_json_path (if exists)
+    - fulltext_grobid: grobid2json format, including:
+        - title
+        - authors
+        - journal
+        - abstract
+        - body
+        - acknowledgement
+        - annex
+        - language_code
+        - glutton_fatcat_release (renamed from fatcat_release)
+    - fulltext_pdftotext: only if fulltext_grobid not set
+        - body
+    """
 
     if 'fulltext_file' in row:
         return row
@@ -49,7 +45,7 @@ def do_line(row, args):
     if not row['fatcat_release'].get('files'):
         row['fulltext_status'] = 'no-file'
         return row
-    fulltext_file = find_local_file(row['fatcat_release']['files'], base_dir=args.base_dir)
+    fulltext_file = find_local_file(row['fatcat_release']['files'], base_dir=base_dir)
     if not fulltext_file:
         row['fulltext_status'] = 'no-local-file'
         return row
@@ -61,31 +57,31 @@ def do_line(row, args):
         fulltext_file['sha1'],
         directory="pdf/",
         file_suffix=".pdf",
-        base_dir=args.base_dir,
+        base_dir=base_dir,
     )
     fulltext_file['pdftotext_path'] = blob_path(
         fulltext_file['sha1'],
         directory="pdftotext/",
         file_suffix=".txt",
-        base_dir=args.base_dir,
+        base_dir=base_dir,
     )
     fulltext_file['thumbnail_path'] = blob_path(
         fulltext_file['sha1'],
         directory="thumbnail/",
         file_suffix=".png",
-        base_dir=args.base_dir,
+        base_dir=base_dir,
     )
     fulltext_file['grobid_xml_path'] = blob_path(
         fulltext_file['sha1'],
         directory="grobid/",
         file_suffix=".xml",
-        base_dir=args.base_dir,
+        base_dir=base_dir,
     )
     fulltext_file['grobid_json_path'] = blob_path(
         fulltext_file['sha1'],
         directory="grobid/",
         file_suffix=".json",
-        base_dir=args.base_dir,
+        base_dir=base_dir,
     )
 
     # check if derivatives actually exist
@@ -122,29 +118,15 @@ def do_line(row, args):
     row['fulltext_status'] = 'success-grobid'
     return row
 
-def run(args):
-    for l in args.json_file:
+def enrich_derivatives_file(json_input, json_output, base_dir):
+    """
+    Reads lines from json_input (an open, readable file or similar), looks for
+    existing derivative files in base_dir (a path str), and writes string JSON
+    lines to json_output (an open, writable file or similar).
+    """
+    for l in json_input:
         l = json.loads(l)
-        result = do_line(l, args)
+        result = do_line(l, base_dir)
         if result:
-            print(json.dumps(result, sort_keys=True))
-
-def main():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('json_file',
-        help="enriched (with fatcat_release) metadata file",
-        type=argparse.FileType('r'))
-    parser.add_argument('--base-dir',
-        help="directory to look for files (in 'pdf' subdirectory)",
-        default="fulltext_web")
-    subparsers = parser.add_subparsers()
-
-    args = parser.parse_args()
-    args.session = requests_retry_session()
-
-    run(args)
-
-if __name__ == '__main__':
-    main()
+            print(json.dumps(result, sort_keys=True), file=json_output)
 
