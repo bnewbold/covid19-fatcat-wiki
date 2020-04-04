@@ -56,8 +56,11 @@ bp = Blueprint('search', __name__)
 
 @bp.url_defaults
 def add_language_code(endpoint, values):
-    if g.lang_code_set:
+    if hasattr(g, "lang_code_set") and g.lang_code_set:
         values.setdefault('lang_code', g.lang_code)
+    else:
+        values.setdefault('lang_code', 'en')
+        g.lang_code = 'en'
 
 @bp.url_value_preprocessor
 def pull_lang_code(endpoint, values):
@@ -65,6 +68,10 @@ def pull_lang_code(endpoint, values):
     g.lang_code = values.pop('lang_code', app.config['BABEL_DEFAULT_LOCALE'])
     if g.lang_code not in app.config['SUPPORTED_LANGUAGES']:
         abort(404)
+
+@babel.localeselector
+def get_locale():
+    return g.lang_code
 
 @bp.route('/', methods=['GET'])
 def page_home():
@@ -93,18 +100,18 @@ def page_sources():
     return render_template('sources_{}.html'.format(g.lang_code))
 
 
-@bp.errorhandler(404)
+@bp.app_errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-@bp.errorhandler(400)
+@bp.app_errorhandler(400)
 def page_bad_request(e):
     return render_template('400.html'), 400
 
-@bp.errorhandler(502)
-@bp.errorhandler(503)
-@bp.errorhandler(504)
-@bp.errorhandler(500)
+@bp.app_errorhandler(502)
+@bp.app_errorhandler(503)
+@bp.app_errorhandler(504)
+@bp.app_errorhandler(500)
 def page_server_error(e):
     return render_template('500.html'), 500
 

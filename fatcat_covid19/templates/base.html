@@ -50,7 +50,7 @@
       <i class="dropdown icon" style="margin-left: 0.2em;"></i>
         <div class="menu">
           {% for lang_code, lang_name in config.SUPPORTED_LANGUAGES.items() %}
-            <a class="item" href="{{ url_for(request.endpoint, lang_code=lang_code) }}">{{ lang_name }}</a>
+            <a class="item" href="{{ url_for(request.endpoint or "search.page_home", lang_code=lang_code) }}">{{ lang_name }}</a>
           {% endfor %}
         </div>
       </div>
