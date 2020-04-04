@@ -152,6 +152,10 @@ def fulltext_to_elasticsearch(row, force_bool=True):
             t['fulltext']['thumbnail_url'] = "/" + full['thumbnail_path']
         if full.get('grobid_xml_path'):
             t['fulltext']['grobid_xml_url'] = "/" + full['grobid_xml_path']
+        for url in full.get('urls', []):
+            if url.get('rel') in ('webarchive', 'archive') and 'archive.org/' in url['url']:
+                t['fulltext']['ia_pdf_url'] = url['url']
+                break
 
     if 'fulltext_grobid' in row:
         grobid = row['fulltext_grobid']
