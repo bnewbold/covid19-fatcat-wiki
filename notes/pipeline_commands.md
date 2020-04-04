@@ -16,14 +16,11 @@ Fetch and transform metadata:
     cat metadata/cord19.$CORDDATE.json | parallel -j10 --linebuffer --round-robin --pipe ./covid19_tool.py enrich-fatcat - | pv -l > metadata/cord19.$CORDDATE.enrich.json
     cat metadata/cord19.$CORDDATE.enrich.json | jq 'select(.release_id == null) | .cord19_paper' -c > metadata/cord19.$CORDDATE.missing.json
 
-Existing fatcat ES transform:
-
-    # in fatcat python directory, pipenv shell
-    cat /srv/covid19.fatcat.wiki/src/metadata/cord19.$CORDDATE.enrich.json | jq .fatcat_release -c | rg -v '^null$' | ./fatcat_transform.py elasticsearch-releases - - | pv -l > /srv/covid19.fatcat.wiki/src/metadata/cord19.$CORDDATE.fatcat_es.json
-
 Download fulltext from wayback:
 
-    cat metadata/cord19.$CORDDATE.enrich.json | jq .fatcat_release -c | parallel -j20 --linebuffer --round-robin --pipe ./bin/deliver_file2disk.py --disk-dir fulltext_web - | pv -l > fatcat_web_20200327.log
+    cat metadata/cord19.$CORDDATE.enrich.json | jq .fatcat_release -c | parallel -j20 --linebuffer --round-robin --pipe ./bin/deliver_file2disk.py --disk-dir fulltext_web - | pv -l > fatcat_web_$CORDDATE.log
+
+    cut -f1 fatcat_web_$CORDDATE.log | sort | uniq -c | sort -nr
 
 Extract text from PDFs:
 
