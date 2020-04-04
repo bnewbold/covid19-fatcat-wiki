@@ -63,10 +63,13 @@ been tested elsewhere. Software dependencies include:
 
 - python 3.7 (locked to this minor version)
 - [pipenv](https://github.com/pypa/pipenv)
+- `poppler-utils`
 - elasticsearch 6.x (7.x may or may not work fine)
 - [esbulk](https://github.com/sharkdp/fd)
 - [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`)
 - [`fd`](https://github.com/sharkdp/fd)
+- `pv`
+- `parallel`
 
 To run the web interface in local/debug mode, with search queries sent to
 public search index by default:
