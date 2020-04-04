@@ -51,7 +51,7 @@ def enrich_fatcat_row(row, api_session):
     if fatcat_release:
         row['fatcat_release'] = fatcat_release
         row['release_id'] = fatcat_release['ident']
-    print(json.dumps(row, sort_keys=True))
+    return row
 
 
 def enrich_fatcat_file(json_input, json_output):
@@ -65,3 +65,4 @@ def enrich_fatcat_file(json_input, json_output):
         result = enrich_fatcat_row(l, api_session)
         if result:
             print(json.dumps(result, sort_keys=True), file=json_output)
+

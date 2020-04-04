@@ -9,7 +9,7 @@ Licensed the same as code under fatcat_covid19/
 import sys
 import argparse
 
-from fatcat_covid19.webface import app
+from fatcat_covid19.enrich import enrich_fatcat_file
 from fatcat_covid19.derivatives import enrich_derivatives_file
 from fatcat_covid19.transform import transform_es_file
 
@@ -40,12 +40,15 @@ def main():
 
     sub_enrich_fatcat = subparsers.add_parser('enrich-fatcat',
         help="lookup fatcat releases from JSON metadata")
+    sub_enrich_fatcat.set_defaults(
+        action='enrich-fatcat',
+    )
     sub_enrich_fatcat.add_argument('json_file',
         help="input JSON rows file (eg, CORD-19 parsed JSON)",
         type=argparse.FileType('r'))
     sub_enrich_fatcat.add_argument('--json-output',
         help="file to write to",
-        type=argparse.FileType('r'),
+        type=argparse.FileType('w'),
         default=sys.stdout)
 
     sub_enrich_derivatives = subparsers.add_parser('enrich-derivatives',
@@ -58,7 +61,7 @@ def main():
         type=argparse.FileType('r'))
     sub_enrich_derivatives.add_argument('--json-output',
         help="file to write ",
-        type=argparse.FileType('r'),
+        type=argparse.FileType('w'),
         default=sys.stdout)
     sub_enrich_derivatives.add_argument('--base-dir',
         help="directory to look for files (in 'pdf' subdirectory)",
@@ -66,20 +69,25 @@ def main():
 
     sub_transform_es = subparsers.add_parser('transform-es',
         help="transform fulltext JSON to elasticsearch schema JSON")
+    sub_transform_es.set_defaults(
+        action='transform-es',
+    )
     sub_transform_es.add_argument('json_file',
         help="input JSON rows file (fulltext)",
         type=argparse.FileType('r'))
     sub_transform_es.add_argument('--json-output',
         help="file to write to",
-        type=argparse.FileType('r'),
+        type=argparse.FileType('w'),
         default=sys.stdout)
 
     args = parser.parse_args()
 
     if args.action == 'webface':
+        # don't import until we use app; otherwise sentry exception reporting happens
+        from fatcat_covid19.webface import app
         app.run(debug=args.debug, host=args.host, port=args.port)
     elif args.action == 'enrich-fatcat':
-        transform_es_file(args.json_file, args.json_output)
+        enrich_fatcat_file(args.json_file, args.json_output)
     elif args.action == 'enrich-derivatives':
         enrich_derivatives_file(args.json_file, args.json_output,
             args.base_dir)

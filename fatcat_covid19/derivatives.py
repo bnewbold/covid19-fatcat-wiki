@@ -126,7 +126,7 @@ def enrich_derivatives_file(json_input, json_output, base_dir):
     """
     for l in json_input:
         l = json.loads(l)
-        result = do_line(l, base_dir)
+        result = enrich_derivatives_row(l, base_dir)
         if result:
             print(json.dumps(result, sort_keys=True), file=json_output)
 

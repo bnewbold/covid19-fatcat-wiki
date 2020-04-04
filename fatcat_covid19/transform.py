@@ -68,7 +68,8 @@ def fulltext_to_elasticsearch(row, force_bool=True):
     if release.get('abstracts'):
         for a in release['abstracts']:
             abstracts.append(a['content'])
-            abstract_langs.append(a['lang'])
+            if a.get('lang'):
+                abstract_langs.append(a['lang'])
 
     contrib_names = []
     contrib_affiliations = []
@@ -199,6 +200,6 @@ def transform_es_file(json_input, json_output):
     """
     for l in json_input:
         l = json.loads(l)
-        result = fulltext_to_elasticsearch(l, args)
+        result = fulltext_to_elasticsearch(l)
         if result:
             print(json.dumps(result, sort_keys=True), file=json_output)
