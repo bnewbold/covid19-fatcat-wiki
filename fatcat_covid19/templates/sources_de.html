@@ -4,8 +4,64 @@
 
 {% block body %}
 
-<h1>{{ _("Content Sources") }}</h1>
+<h2> Kuratierte COVID-19-Quellen </ h2>
 
-TODO
+Werke sind mit der Quelle ihrer Aufnahme in dieses COVID-19-Korpus gekennzeichnet:
+
+<ul>
+  <li> <a href="https://pages.semanticscholar.org/coronavirus-research"> Allen Institute for AI CORD-19-Korpus </a>
+  <li> <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov"> WHO-Datenbank mit Veröffentlichungen zu Coronavirus-Erkrankungen (COVID-19) </a>
+  <li> <a href="http://subject.med.wanfangdata.com.cn/Channel/7"> Wanfang-Korpus chinesischer COVID-19-Papiere </a>
+  <li> <a href="http://en.gzbd.cnki.net/GZBT/brief/Default.aspx"> CNKI-Korpus chinesischer COVID-19-Papiere </a>
+  <li> <a href="https://fatcat.wiki"> Fatcat </a> (basierend auf Keyword-Abfragen für den vollständigen Katalog)
+</ ul>
+
+Um insbesondere die Verwendung des CORD-19-Korpus zu verdeutlichen, wird der Korpus nur verwendet, um
+Identifizieren Sie Papiere für die Aufnahme in diesen Index (z. B. durch DOI oder PMCID).
+Bibliografische Metadaten und Inhalte werden dann von der vorhandenen Fatcat abgerufen
+Katalog offener Metadaten und Volltextinhalte werden anhand von Kopien indiziert, die auf gefunden wurden
+das öffentliche Web, Repositories und Publisher-Websites.
+
+<h2> Haftungsausschluss </ h2>
+
+<p>
+Der Fatcat-Katalog soll eine "universelle" Aufbewahrung und Zugang bieten
+Archiv, keine eng gefasste Sammlung nur der Forschung von höchster Qualität
+Inhalt. Dies bedeutet, dass nicht alle Inhalte einer Peer-Review unterzogen wurden, und einige
+wurde möglicherweise auf Dienste wie akademische soziale Netzwerke hochgeladen (z.
+researchgate) oder institutionelle Repositories ohne menschliches Editorial
+Überprüfung oder Filterung.
+
+<p>
+Der Katalog beabsichtigt, Metadaten wie die Veröffentlichungsphase (Entwurf,
+veröffentlicht, zurückgezogen), Veranstaltungsort und Medium (Zeitschriftenartikel, Webpost,
+Enzyklopädieeintrag, Frontmatter), um diesen Inhalt zu filtern. Aber in
+In einigen Fällen sind diese Metadaten unvollständig oder ungenau. Zum Beispiel,
+Vorgedruckte PDF-Dateien sind möglicherweise falsch mit der endgültigen Veröffentlichung verknüpft
+Version eines Werkes oder umgekehrt.
+
+
+<h2> Metadatenquellen </ h2>
+
+Die Quelle aller bibliografischen Informationen wird im Bearbeitungsverlauf aufgezeichnet
+Metadaten, mit denen die Herkunft aller Datensätze rekonstruiert werden kann. Ein paar
+Wichtige Quellen sind hier hervorzuheben:
+
+<ul>
+ <li> Geben Sie Metadaten von <b> Crossref </ b> über deren Öffentlichkeit frei
+ <a href="https://github.com/CrossRef/rest-api-doc"> REST-API </a>
+ <li> Geben Sie Metadaten und verknüpfte Volltextinhalte von NIH <b> Pubmed </ b> und <b> <a href="https://arxiv.org"> arXiv.org </a> </ b> frei
+ <li> Geben Sie Metadaten und verknüpfte gemeinfreie Volltextinhalte in der Sammlung <b> JSTOR </ b> Early Journal Content frei
+ <li> Erstellernamen und Deduplizierung von <b> ORCID </ b> über deren jährliche Veröffentlichung öffentlicher Daten
+ <li> Journal-Titel-Metadaten von <b> DOAJ </ b>, <b> ISSN ROAD </ b> und <b> SHERPA / RoMEO </ b>
+ <li> Volltext-URL-Listen von <b> <a href="https://core.ac.uk"> KERN </a> </ b>,
+ <b> <a href="http://unpaywall.org"> Unpaywall </a> </ b>,
+ <b> <a href="https://www.semanticscholar.org"> Semantic Scholar </a> </ b>,
+ <b> <a href="https://citeseerx.ist.psu.edu"> CiteseerX </a> </ b>,
+ und <b> <a href="https://www.microsoft.com/en-us/research/project/academic"> Microsoft Academic Graph </a> </ b>.
+ <li> <a href="https://guide.fatcat.wiki/sources.html"> Im Fatcat-Handbuch </a> sind weitere wichtige Quellen aufgeführt
+</ ul>
+
+Vielen Dank für die harte Arbeit all dieser Projekte, Institutionen und Einzelpersonen!
 
 {% endblock %}

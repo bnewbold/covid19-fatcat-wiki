@@ -4,8 +4,65 @@
 
 {% block body %}
 
-<h1>About Fatcat COVID-19 Paper Search</h1>
+<h1> Informationen zur Fatcat COVID-19-Papiersuche </ h1>
 
-TODO
+<p>
+Dies ist ein Prototyp eines Volltextsuchindex für Papiere, Berichte, Datensätze und
+andere Forschungsressourcen im Zusammenhang mit der COVID-19-Krise, einschließlich der Öffentlichkeit
+Gesundheitsreaktionen auf Influenzapandemien im Allgemeinen. Die Kuration von Inhalten
+Die Aufnahme basiert auf Bemühungen wie dem Datensatz "CORD-19" und den Bemühungen von
+Behörden wie die WHO und NIH Pubmed. Metadaten und Inhalte stammen aus dem
+vorhandener offener <a href="https://fatcat.wiki"> fatcat </a> Forschungskatalog
+Ausgänge.
+Weitere Informationen finden Sie unter <a href="{{ url_for("search.page_sources") }}"> "Sources" </a>.
+
+<p>
+Es ist zu hoffen, dass diese Ressource mit zusätzlicher Sorgfalt und Entwicklung sein kann
+nützlich für alle, die mit der Forschung auf diesem Gebiet Schritt halten, insbesondere für Leute
+Arbeiten an systemischen Übersichten, Bibliometrie oder Metaresuche. Jedoch zur Zeit
+Dies ist bestenfalls eine Technologiedemonstration, kein robustes Stück
+Wissensinfrastruktur.
+
+<p>
+Wir ermutigen die Leute, das Folgende als maßgeblicher und
+gut unterstützte Tools für die Entdeckung von Forschungsergebnissen:
+
+<ul>
+  <li> <a href="https://pubmed.gov"> Pubmed </a> für die biomedizinische Forschung in
+  allgemein und das themenspezifische <a href="https://www.ncbi.nlm.nih.gov/research/coronavirus/"> LitCovid </a>
+  Index für COVID-19.
+  <li> <a href="https://www.semanticscholar.org/"> Semantic Scholar </a>
+  <li> <a href="https://scholar.google.com"> Google Scholar </a>
+</ ul>
+
+<p>
+Feedback und Fragen können an <b> <a href="mailto:webservices@archive.org"> webservices@archive.org </a> </ b> gerichtet werden.
+
+<h2> Haftungsausschluss </ h2>
+
+<p>
+Dies ist kein produktionsunterstützter Dienst des Internetarchivs. Die Webseite
+Die Such-API ist möglicherweise aufgrund der Ressourcenlast und des Operators nicht mehr verfügbar
+Verfügbarkeit usw. Wenn Sie sich auf diesen Service verlassen möchten, wenden Sie sich bitte an
+uns.
+
+<p>
+Einige in diesem Index verfügbare Inhalte sind danach möglicherweise nicht mehr "dauerhaft zugänglich"
+Die COVID-19-Krise endet aufgrund temporärer Inhaltslizenzen. Der Service selbst
+(covid19.fatcat.wiki) kann auch nach der Krise nicht betrieben werden, obwohl alle
+Der Quellcode und die vorgelagerten Metadaten sollten "ständig zugänglich" sein.
+
+<h2> Zusätzliche Ressourcen </ h2>
+
+<p>
+Der Quellcode ist auf Github verfügbar, und Fehler können dort als Probleme gemeldet werden:
+<a href="https://github.com/bnewbold/covid19-fatcat-wiki"> https://github.com/bnewbold/covid19-fatcat-wiki </a>
+
+<p> Eine Elasticsearch-API ist verfügbar. Einzelheiten finden Sie in der obigen Repo-README-Datei.
+
+<p>
+Massenexporte von Metadaten und abgeleiteten Inhalten sind im Internet verfügbar
+Archiv unter:
+<a href="https://archive.org/details/fatcat_covid19"> https://archive.org/details/fatcat_covid19 </a>
 
 {% endblock %}

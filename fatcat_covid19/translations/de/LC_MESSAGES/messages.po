@@ -1,0 +1,148 @@
+# German translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-04-03 17:00-0700\n"
+"PO-Revision-Date: 2020-04-03 17:00-0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: fatcat_covid19/templates/400.html:6
+msgid "Bad Request"
+msgstr "Ungültige Anforderung"
+
+#: fatcat_covid19/templates/400.html:9
+msgid ""
+"Wasn't able to handle the request, either due to incorrect or unexpected\n"
+"input. Usually more context should be available; if you hit this page it "
+"means\n"
+"you've discovered a new corner case!"
+msgstr ""
+
+#: fatcat_covid19/templates/404.html:6
+msgid "Not Found"
+msgstr "Nicht Gefunden"
+
+#: fatcat_covid19/templates/500.html:6
+msgid "Internal Error"
+msgstr "Interner Fehler"
+
+#: fatcat_covid19/templates/500.html:9
+msgid ""
+"Hrm, something unexpected went wrong. You may have found a bug! This\n"
+"request should be logged and reported automatically; you could re-try or\n"
+"contact us for more info."
+msgstr ""
+
+#: fatcat_covid19/templates/about_de.html:3
+#: fatcat_covid19/templates/about_en.html:3
+#: fatcat_covid19/templates/about_zh.html:3
+#: fatcat_covid19/templates/base.html:35 fatcat_covid19/templates/base.html:107
+msgid "About"
+msgstr "Über"
+
+#: fatcat_covid19/templates/base.html:36 fatcat_covid19/templates/base.html:108
+msgid "Sources"
+msgstr "Quellen"
+
+#: fatcat_covid19/templates/base.html:42
+msgid "Search Papers..."
+msgstr "Suchpapiere ..."
+
+#: fatcat_covid19/templates/base.html:68
+msgid "Prototype"
+msgstr "Prototyp"
+
+#: fatcat_covid19/templates/base.html:69
+msgid "These resources do not constitute medical advice or research consensus!"
+msgstr "Diese Ressourcen stellen keinen medizinischen Rat oder Forschungskonsens dar!"
+
+#: fatcat_covid19/templates/base.html:110
+msgid "Code"
+msgstr "Quellcode"
+
+#: fatcat_covid19/templates/entity_macros.html:202
+#: fatcat_covid19/templates/entity_macros.html:204
+#: fatcat_covid19/templates/entity_macros.html:207
+msgid "Previous"
+msgstr "Bisherige"
+
+#: fatcat_covid19/templates/entity_macros.html:216
+msgid "Next"
+msgstr "Nächster"
+
+#: fatcat_covid19/templates/fulltext_search.html:6
+#: fatcat_covid19/templates/fulltext_search.html:22
+#: fatcat_covid19/templates/home.html:23
+msgid "Search"
+msgstr "Suche"
+
+#: fatcat_covid19/templates/fulltext_search.html:8
+msgid "Fulltext Search"
+msgstr "Volltextsuche"
+
+#: fatcat_covid19/templates/fulltext_search.html:63
+msgid "Raw query was:"
+msgstr ""
+
+#: fatcat_covid19/templates/fulltext_search.html:67
+msgid "No results found!"
+msgstr "keine Ergebnisse gefunden!"
+
+#: fatcat_covid19/templates/fulltext_search.html:75
+msgid "Try searching elsewhere"
+msgstr ""
+
+#: fatcat_covid19/templates/home.html:15
+msgid "Search Tens of Thousands of COVID-19 Research Papers and Reports"
+msgstr "Durchsuchen Sie Zehntausende von COVID-19-Forschungsarbeiten und -berichten"
+
+#: fatcat_covid19/templates/home.html:22
+msgid "by title, authors, identifiers..."
+msgstr "nach Titel, Autoren, Bezeichnern ..."
+
+#: fatcat_covid19/templates/home.html:47
+msgid "This service is hosted at"
+msgstr "Dieser Service wird gehostet bei"
+
+#: fatcat_covid19/templates/home.html:49
+msgid "a US non-profit dedicated to providing Universal Access to All Knowledge"
+msgstr "Ein US-gemeinnütziger Verein, der sich der Bereitstellung des universellen Zugangs zu allem Wissen widmet"
+
+#: fatcat_covid19/templates/home.html:51
+msgid ""
+"Metadata and content comes from the intersection of public curated "
+"COVID-19 publication lists (like the"
+msgstr "Metadaten und Inhalte stammen aus der Schnittstelle von öffentlich kuratierten "
+"COVID-19-Publikationslisten (wie die"
+
+#: fatcat_covid19/templates/home.html:53 fatcat_covid19/templates/home.html:54
+msgid "and the"
+msgstr "und"
+
+#: fatcat_covid19/templates/home.html:55
+msgid "open catalog of research publications on the scholarly web"
+msgstr "offener Katalog von Forschungspublikationen im wissenschaftlichen Web"
+
+#: fatcat_covid19/templates/sources_de.html:3
+#: fatcat_covid19/templates/sources_de.html:7
+#: fatcat_covid19/templates/sources_en.html:3
+#: fatcat_covid19/templates/sources_zh.html:3
+msgid "Content Sources"
+msgstr ""
+
+#: fatcat_covid19/templates/sources_zh.html:7
+msgid "Sources of Content and Metadata"
+msgstr ""
+

@@ -4,8 +4,65 @@
 
 {% block body %}
 
-<h1>About Fatcat COVID-19 Paper Search</h1>
+<h1>关于Fatcat COVID-19论文搜索</ h1>
 
-TODO
+<p>
+这是论文，报告，数据集和
+与COVID-19危机相关的其他研究资源，包括公共资源
+对流感大流行的健康应对更为普遍。内容的策划
+包括在内的依据是“ CORD-19”数据集之类的工作，以及
+世卫组织和NIH Pubmed等权威机构。元数据和内容来自
+现有的开放式<a href="https://fatcat.wiki"> fatcat </a>研究目录
+输出。
+有关详细信息，请参见<a href="{{ url_for("search.page_sources") }}">“来源” </a>。
+
+<p>
+希望通过额外的照顾和发展，该资源可以
+对在该领域进行研究的任何人（特别是人们）有用
+从事系统评价，文献计量学或元研究。但是，当时
+从写作的角度来看，这充其量只是技术演示，而不是功能强大的
+知识基础架构。
+
+<p>
+我们鼓励人们考虑以下更权威和
+支持良好的研究发现工具：
+
+<ul>
+  <li> <a href="https://pubmed.gov">公开</a>，用于
+  常规以及特定主题的<a href="https://www.ncbi.nlm.nih.gov/research/coronavirus/"> LitCovid </a>
+  COVID-19的索引。
+  <li> <a href="https://www.semanticscholar.org/">语义学者</a>
+  <li> <a href="https://scholar.google.com"> Google学术搜索</a>
+</ ul>
+
+<p>
+反馈和查询可以直接发送到<b> <a href="mailto:webservices@archive.org"> webservices@archive.org </a> </ b>。
+
+<h2>服务免责声明</ h2>
+
+<p>
+这不是Internet存档的生产支持服务。网站
+且操作员可能由于资源负荷而无法使用搜索API
+可用性等。如果您想依赖此服务，请联系
+我们。
+
+<p>
+此索引中的某些内容在之后可能无法“永久访问”
+由于临时内容许可，COVID-19危机结束了。服务本身
+（covid19.fatcat.wiki）在危机后也可能无法运行，尽管所有
+源代码和上游元数据应该是“永久可访问的”。
+
+<h2>其他资源</ h2>
+
+<p>
+Github上提供了源代码，并且可以将错误报告为问题：
+<a href="https://github.com/bnewbold/covid19-fatcat-wiki"> https://github.com/bnewbold/covid19-fatcat-wiki </a>
+
+<p>有可用的elasticsearch API；有关详细信息，请参见上述回购自述文件。
+
+<p>
+Internet上可以批量导出元数据和派生内容
+存档于：
+<a href="https://archive.org/details/fatcat_covid19"> https://archive.org/details/fatcat_covid19 </a>
 
 {% endblock %}
