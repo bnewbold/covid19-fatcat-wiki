@@ -38,25 +38,29 @@ def main():
         default=9119,
         help="listen on this port")
 
-    sub_enrich = subparsers.add_parser('enrich',
-        help="enrich CORD-19 dataset (JSON) with fatcat metadata")
-    sub_enrich.set_defaults(
-        action='enrich',
-    )
-    sub_enrich.add_argument('json_file',
-        help="CORD-19 parsed JSON file",
+    sub_enrich_fatcat = subparsers.add_parser('enrich-fatcat',
+        help="lookup fatcat releases from JSON metadata")
+    sub_enrich_fatcat.add_argument('json_file',
+        help="input JSON rows file (eg, CORD-19 parsed JSON)",
         type=argparse.FileType('r'))
+    sub_enrich_fatcat.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('r'),
+        default=sys.stdout)
 
-    sub_derivatives = subparsers.add_parser('derivatives',
+    sub_enrich_derivatives = subparsers.add_parser('enrich-derivatives',
         help="enrich JSON rows with existing derivative files")
-    sub_derivatives.add_argument('json_file',
+    sub_enrich_derivatives.set_defaults(
+        action='enrich-derivatives',
+    )
+    sub_enrich_derivatives.add_argument('json_file',
         help="enriched (with fatcat_release) metadata file",
         type=argparse.FileType('r'))
-    sub_derivatives.add_argument('--json-output',
+    sub_enrich_derivatives.add_argument('--json-output',
         help="file to write ",
         type=argparse.FileType('r'),
         default=sys.stdout)
-    sub_derivatives.add_argument('--base-dir',
+    sub_enrich_derivatives.add_argument('--base-dir',
         help="directory to look for files (in 'pdf' subdirectory)",
         default="fulltext_web")
 
@@ -70,26 +74,16 @@ def main():
         type=argparse.FileType('r'),
         default=sys.stdout)
 
-    sub_enrich_fatcat = subparsers.add_parser('enrich-fatcat',
-        help="lookup fatcat releases from JSON metadata")
-    sub_enrich_fatcat.add_argument('json_file',
-        help="input JSON rows file (eg, CORD-19 parsed JSON)",
-        type=argparse.FileType('r'))
-    sub_enrich_fatcat.add_argument('--json-output',
-        help="file to write to",
-        type=argparse.FileType('r'),
-        default=sys.stdout)
-
     args = parser.parse_args()
 
     if args.action == 'webface':
         app.run(debug=args.debug, host=args.host, port=args.port)
-    elif args.action == 'derivatives':
+    elif args.action == 'enrich-fatcat':
+        transform_es_file(args.json_file, args.json_output)
+    elif args.action == 'enrich-derivatives':
         enrich_derivatives_file(args.json_file, args.json_output,
             args.base_dir)
     elif args.action == 'transform-es':
-        transform_es_file(args.json_file, args.json_output)
-    elif args.action == 'enrich-fatcat':
         transform_es_file(args.json_file, args.json_output)
     else:
         print("tell me what to do!")
