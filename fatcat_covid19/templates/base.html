@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="origin-when-cross-origin">
 
-  <title>COVID-19 Research Search</title>
+  <title>{{ _("COVID-19 Research Search") }}</title>
 
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css"
@@ -36,7 +36,7 @@
     <a href="{{ url_for("search.page_sources") }}" class="item mobile-hide">{{ _("Sources") }}</a>
     <div class="right menu">
       <div class="item" style="padding: 0;">
-        <form class="" action="/fulltext/search" method="get" role="search" aria-label="Papers">
+        <form class="" action="{{ url_for("search.fulltext_search") }}" method="get" role="search" aria-label="Papers">
           <div class="ui transparent inverted icon input">
             <i class="search icon" style="padding-right: 2em;"></i>
             <input type="text" placeholder="{{ _("Search Papers...") }}" name="q" style="border: 1px solid #777 !important; padding: 5px !important; width: 15em;">
@@ -103,7 +103,7 @@
 <footer class="ui inverted vertical footer segment" style="margin-top: 2em; padding-top: 2em; padding-bottom:2em; position: absolute; bottom: 0px; width: 100%;">
   <div class="ui center aligned container">
     <div class="ui horizontal inverted small divided link list">
-      <a class="item" href="{{ url_for("search.page_home") }}">Home</a>
+      <a class="item" href="{{ url_for("search.page_home") }}">{{ _("Home") }}</a>
       <a class="item" href="{{ url_for("search.page_about") }}">{{ _("About") }}</a>
       <a class="item" href="{{ url_for("search.page_sources") }}">{{ _("Sources") }}</a>
       <a class="item" href="https://fatcat.wiki/">Fatcat</a>

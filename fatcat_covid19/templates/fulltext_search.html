@@ -14,11 +14,11 @@
 
 <div class="ui vertical stripe segment" style="background-color: #EEE; padding-top: 2.5em;">
   <div class="ui container text">
-    <h1>Search all COVID-19 Resources</h1>
+    <h1>{{ _("Search COVID-19 documents") }}</h1>
     <form class="" role="search" action="/fulltext/search" method="get">
       <div class="ui form">
         <div class="ui action input huge fluid">
-          <input type="text" placeholder="Query..." name="q" value="{% if query %}{{ query }}{% endif %}" aria-label="search metadata">
+          <input type="text" placeholder="{{ _("Query...") }}" name="q" value="{% if query %}{{ query }}{% endif %}" aria-label="search metadata">
           <button class="ui primary button">{{ _("Search") }}</button>
         </div>
         {#
