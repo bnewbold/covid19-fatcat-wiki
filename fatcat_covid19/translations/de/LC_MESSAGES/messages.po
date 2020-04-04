@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-03 17:00-0700\n"
+"POT-Creation-Date: 2020-04-03 17:39-0700\n"
 "PO-Revision-Date: 2020-04-03 17:00-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -66,7 +66,9 @@ msgstr "Prototyp"
 
 #: fatcat_covid19/templates/base.html:69
 msgid "These resources do not constitute medical advice or research consensus!"
-msgstr "Diese Ressourcen stellen keinen medizinischen Rat oder Forschungskonsens dar!"
+msgstr ""
+"Diese Ressourcen stellen keinen medizinischen Rat oder Forschungskonsens "
+"dar!"
 
 #: fatcat_covid19/templates/base.html:110
 msgid "Code"
@@ -106,11 +108,26 @@ msgstr ""
 
 #: fatcat_covid19/templates/home.html:15
 msgid "Search Tens of Thousands of COVID-19 Research Papers and Reports"
-msgstr "Durchsuchen Sie Zehntausende von COVID-19-Forschungsarbeiten und -berichten"
+msgstr ""
+"Durchsuchen Sie Zehntausende von COVID-19-Forschungsarbeiten und "
+"-berichten"
 
 #: fatcat_covid19/templates/home.html:22
 msgid "by title, authors, identifiers..."
 msgstr "nach Titel, Autoren, Bezeichnern ..."
+
+#: fatcat_covid19/templates/home.html:33
+msgid ""
+"This is a prototype full text search index of papers, reports,\n"
+"    datasets, and other research resources related to the COVID-19 "
+"crisis,\n"
+"    including public health responses to influenza pandemics more\n"
+"    generally."
+msgstr "Dies ist ein Prototyp eines Volltextsuchindex von Artikeln, Berichten, Datensätze und andere Forschungsressourcen im Zusammenhang mit der COVID-19-Krise, einschließlich allgemeiner Reaktionen der öffentlichen Gesundheit auf Influenzapandemien"
+
+#: fatcat_covid19/templates/home.html:37
+msgid "Read more..."
+msgstr "Read more..."
 
 #: fatcat_covid19/templates/home.html:47
 msgid "This service is hosted at"
@@ -118,14 +135,17 @@ msgstr "Dieser Service wird gehostet bei"
 
 #: fatcat_covid19/templates/home.html:49
 msgid "a US non-profit dedicated to providing Universal Access to All Knowledge"
-msgstr "Ein US-gemeinnütziger Verein, der sich der Bereitstellung des universellen Zugangs zu allem Wissen widmet"
+msgstr ""
+"Ein US-gemeinnütziger Verein, der sich der Bereitstellung des "
+"universellen Zugangs zu allem Wissen widmet"
 
 #: fatcat_covid19/templates/home.html:51
 msgid ""
 "Metadata and content comes from the intersection of public curated "
 "COVID-19 publication lists (like the"
-msgstr "Metadaten und Inhalte stammen aus der Schnittstelle von öffentlich kuratierten "
-"COVID-19-Publikationslisten (wie die"
+msgstr ""
+"Metadaten und Inhalte stammen aus der Schnittstelle von öffentlich "
+"kuratierten COVID-19-Publikationslisten (wie die"
 
 #: fatcat_covid19/templates/home.html:53 fatcat_covid19/templates/home.html:54
 msgid "and the"
@@ -136,13 +156,11 @@ msgid "open catalog of research publications on the scholarly web"
 msgstr "offener Katalog von Forschungspublikationen im wissenschaftlichen Web"
 
 #: fatcat_covid19/templates/sources_de.html:3
-#: fatcat_covid19/templates/sources_de.html:7
 #: fatcat_covid19/templates/sources_en.html:3
 #: fatcat_covid19/templates/sources_zh.html:3
 msgid "Content Sources"
 msgstr ""
 
-#: fatcat_covid19/templates/sources_zh.html:7
-msgid "Sources of Content and Metadata"
-msgstr ""
+#~ msgid "Sources of Content and Metadata"
+#~ msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-03 17:00-0700\n"
+"POT-Creation-Date: 2020-04-03 17:39-0700\n"
 "PO-Revision-Date: 2020-04-03 17:17-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -112,6 +112,19 @@ msgstr "搜索数以千计的COVID-19研究论文和报告"
 msgid "by title, authors, identifiers..."
 msgstr "按标题，作者，标识符"
 
+#: fatcat_covid19/templates/home.html:33
+msgid ""
+"This is a prototype full text search index of papers, reports,\n"
+"    datasets, and other research resources related to the COVID-19 "
+"crisis,\n"
+"    including public health responses to influenza pandemics more\n"
+"    generally."
+msgstr "这是论文，报告， 数据集和其他与COVID-19危机相关的研究资源，包括对流感大流行的公共卫生应对"
+
+#: fatcat_covid19/templates/home.html:37
+msgid "Read more..."
+msgstr "阅读更多..."
+
 #: fatcat_covid19/templates/home.html:47
 msgid "This service is hosted at"
 msgstr "该服务由美国非营利性组织"
@@ -135,13 +148,11 @@ msgid "open catalog of research publications on the scholarly web"
 msgstr "在学术网上公开研究出版物目录"
 
 #: fatcat_covid19/templates/sources_de.html:3
-#: fatcat_covid19/templates/sources_de.html:7
 #: fatcat_covid19/templates/sources_en.html:3
 #: fatcat_covid19/templates/sources_zh.html:3
 msgid "Content Sources"
 msgstr ""
 
-#: fatcat_covid19/templates/sources_zh.html:7
-msgid "Sources of Content and Metadata"
-msgstr ""
+#~ msgid "Sources of Content and Metadata"
+#~ msgstr ""
 

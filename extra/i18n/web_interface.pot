@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-03 17:00-0700\n"
+"POT-Creation-Date: 2020-04-03 17:39-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,19 @@ msgstr ""
 msgid "by title, authors, identifiers..."
 msgstr ""
 
+#: fatcat_covid19/templates/home.html:33
+msgid ""
+"This is a prototype full text search index of papers, reports,\n"
+"    datasets, and other research resources related to the COVID-19 "
+"crisis,\n"
+"    including public health responses to influenza pandemics more\n"
+"    generally."
+msgstr ""
+
+#: fatcat_covid19/templates/home.html:37
+msgid "Read more..."
+msgstr ""
+
 #: fatcat_covid19/templates/home.html:47
 msgid "This service is hosted at"
 msgstr ""
@@ -134,13 +147,8 @@ msgid "open catalog of research publications on the scholarly web"
 msgstr ""
 
 #: fatcat_covid19/templates/sources_de.html:3
-#: fatcat_covid19/templates/sources_de.html:7
 #: fatcat_covid19/templates/sources_en.html:3
 #: fatcat_covid19/templates/sources_zh.html:3
 msgid "Content Sources"
-msgstr ""
-
-#: fatcat_covid19/templates/sources_zh.html:7
-msgid "Sources of Content and Metadata"
 msgstr ""
 
