@@ -25,7 +25,7 @@ def enrich_fatcat_row(row, api_session):
             params={
                 'pmcid': pmcid,
                 'expand': 'container,files,filesets,webcaptures',
-                'hide': 'abstracts,references',
+                'hide': 'references',
         })
         if resp.status_code == 200:
             fatcat_release = resp.json()
@@ -34,7 +34,7 @@ def enrich_fatcat_row(row, api_session):
             params={
                 'doi': doi,
                 'expand': 'container,files,filesets,webcaptures',
-                'hide': 'abstracts,references',
+                'hide': 'references',
         })
         if resp.status_code == 200:
             fatcat_release = resp.json()
@@ -43,7 +43,7 @@ def enrich_fatcat_row(row, api_session):
             params={
                 'pmid': pubmed_id,
                 'expand': 'container,files,filesets,webcaptures',
-                'hide': 'abstracts,references',
+                'hide': 'references',
         })
         if resp.status_code == 200:
             fatcat_release = resp.json()
