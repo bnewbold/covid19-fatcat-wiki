@@ -58,7 +58,7 @@ msgstr "Quellen"
 
 #: fatcat_covid19/templates/base.html:42
 msgid "Search Papers..."
-msgstr "Suchpapiere ..."
+msgstr "Artikel suchen..."
 
 #: fatcat_covid19/templates/base.html:68
 msgid "Prototype"
@@ -78,11 +78,11 @@ msgstr "Quellcode"
 #: fatcat_covid19/templates/entity_macros.html:204
 #: fatcat_covid19/templates/entity_macros.html:207
 msgid "Previous"
-msgstr "Bisherige"
+msgstr "Vorherige"
 
 #: fatcat_covid19/templates/entity_macros.html:216
 msgid "Next"
-msgstr "Nächster"
+msgstr "Nächste"
 
 #: fatcat_covid19/templates/fulltext_search.html:6
 #: fatcat_covid19/templates/fulltext_search.html:22
@@ -96,7 +96,7 @@ msgstr "Volltextsuche"
 
 #: fatcat_covid19/templates/fulltext_search.html:63
 msgid "Raw query was:"
-msgstr ""
+msgstr "Suchanfrage war:"
 
 #: fatcat_covid19/templates/fulltext_search.html:67
 msgid "No results found!"
@@ -104,13 +104,12 @@ msgstr "keine Ergebnisse gefunden!"
 
 #: fatcat_covid19/templates/fulltext_search.html:75
 msgid "Try searching elsewhere"
-msgstr ""
+msgstr "Anderswo suchen"
 
 #: fatcat_covid19/templates/home.html:15
 msgid "Search Tens of Thousands of COVID-19 Research Papers and Reports"
 msgstr ""
-"Durchsuchen Sie Zehntausende von COVID-19-Forschungsarbeiten und "
-"-berichten"
+"Durchsuchen Sie Zehntausende COVID-19 Artikel und Forschungsberichte"
 
 #: fatcat_covid19/templates/home.html:22
 msgid "by title, authors, identifiers..."
@@ -123,21 +122,21 @@ msgid ""
 "crisis,\n"
 "    including public health responses to influenza pandemics more\n"
 "    generally."
-msgstr "Dies ist ein Prototyp eines Volltextsuchindex von Artikeln, Berichten, Datensätze und andere Forschungsressourcen im Zusammenhang mit der COVID-19-Krise, einschließlich allgemeiner Reaktionen der öffentlichen Gesundheit auf Influenzapandemien"
+msgstr "Dies ist eine prototypische Suchmaschine über Artikel, Berichte, Datensätze und andere Forschungsressourcen im Zusammenhang mit der COVID-19-Krise, als auch über Dokumente des Gesundheitswesens zu Influenzapandemien im Allgemeinen"
 
 #: fatcat_covid19/templates/home.html:37
 msgid "Read more..."
-msgstr "Read more..."
+msgstr "Mehr lesen..."
 
 #: fatcat_covid19/templates/home.html:47
 msgid "This service is hosted at"
-msgstr "Dieser Service wird gehostet bei"
+msgstr "Dieser Dienst wird gehostet vom"
 
 #: fatcat_covid19/templates/home.html:49
 msgid "a US non-profit dedicated to providing Universal Access to All Knowledge"
 msgstr ""
-"Ein US-gemeinnütziger Verein, der sich der Bereitstellung des "
-"universellen Zugangs zu allem Wissen widmet"
+"Ein gemeinnütziger, US-amerikanischer Verein, der sich dem "
+"universellen Zugang zu Wissen widmet"
 
 #: fatcat_covid19/templates/home.html:51
 msgid ""
