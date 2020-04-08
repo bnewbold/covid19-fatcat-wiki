@@ -94,8 +94,10 @@
   {% if paper.withdrawn_status %}
     <b style="color: red;"><code>[{{ paper.withdrawn_status }}]</code></b>
   {% endif %}
-  {% if paper.release_stage and paper.release_stage != "published" %}
-    <b style="color: pink;"><code>[{{ paper.release_stage }}]</code></b>
+  {% if paper.release_stage == "accepted" %}
+    <b style="color: brown;"><code>[{{ paper.release_stage }}]</code></b>
+  {% elif paper.release_stage and paper.release_stage != "published" %}
+    <b style="color: red;"><code>[{{ paper.release_stage }}]</code></b>
   {% elif not paper.release_stage %}
     <b style="color: red;"><code>[unpublished?]</code></b>
   {% endif %}
