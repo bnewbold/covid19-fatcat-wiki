@@ -7,6 +7,17 @@ import datetime
 from fatcat_covid19.common import *
 
 
+UNWANTED_ABSTRACT_PREFIXES = [
+    # roughly sort this long to short
+    'Abstract No Abstract ',
+    'Publisher Summary ',
+    'Abstract ',
+    'ABSTRACT ',
+    'Summary ',
+    'Background: ',
+    'Background ',
+]
+
 def fulltext_to_elasticsearch(row, force_bool=True):
     """
     Converts from fulltext content and release model/schema to elasticsearch
@@ -67,9 +78,26 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
     if release.get('abstracts'):
         for a in release['abstracts']:
-            abstracts.append(a['content'])
-            if a.get('lang'):
-                abstract_langs.append(a['lang'])
+
+            # hack to (partially) clean up common JATS abstract display case
+            if a.get('mimetype') == 'application/xml+jats':
+                for tag in ('p', 'jats', 'jats:p', 'jats:title'):
+                    a['content'] = a['content'].replace('<{}>'.format(tag), '')
+                    a['content'] = a['content'].replace('</{}>'.format(tag), '')
+                    # ugh, double encoding happens
+                    a['content'] = a['content'].replace('&lt;/{}&gt;'.format(tag), '')
+                    a['content'] = a['content'].replace('&lt;{}&gt;'.format(tag), '')
+
+            # hack to remove abstract prefixes
+            for prefix in UNWANTED_ABSTRACT_PREFIXES:
+                if a['content'].startswith(prefix):
+                    a['content'] = a['content'][len(prefix):]
+                    break
+            a['content'] = a['content'].strip()
+            if a['content']:
+                abstracts.append(a['content'].strip())
+                if a.get('lang'):
+                    abstract_langs.append(a['lang'])
 
     contrib_names = []
     contrib_affiliations = []
