@@ -46,7 +46,7 @@ def parse_cnki_tables(cnki_html):
     return papers
 
 if __name__ == "__main__":
-    with open("cnki_tables.html", "r") as f:
+    with open(sys.argv[1], "r") as f:
         res = parse_cnki_tables(f.read())
         for paper in res:
             print(json.dumps(paper, sort_keys=True))
