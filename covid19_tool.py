@@ -9,6 +9,7 @@ Licensed the same as code under fatcat_covid19/
 import sys
 import argparse
 
+from fatcat_covid19.parse import parse_cord19_file
 from fatcat_covid19.enrich import enrich_fatcat_file
 from fatcat_covid19.derivatives import enrich_derivatives_file
 from fatcat_covid19.transform import transform_es_file
@@ -22,21 +23,18 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
-    sub_webface = subparsers.add_parser('webface',
-        help="run flask web interface")
-    sub_webface.set_defaults(
-        action='webface',
+    sub_parse_cord = subparsers.add_parser('parse-cord19',
+        help="parse a CORD-19 CSV file into JSON")
+    sub_parse_cord.set_defaults(
+        action='parse-cord19',
     )
-    sub_webface.add_argument('--debug',
-        action='store_true',
-        help="enable debugging interface (note: not for everything)")
-    sub_webface.add_argument('--host',
-        default="127.0.0.1",
-        help="listen on this host/IP")
-    sub_webface.add_argument('--port',
-        type=int,
-        default=9119,
-        help="listen on this port")
+    sub_parse_cord.add_argument('csv_path',
+        help="input CSV file path",
+        type=str)
+    sub_parse_cord.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('w'),
+        default=sys.stdout)
 
     sub_enrich_fatcat = subparsers.add_parser('enrich-fatcat',
         help="lookup fatcat releases from JSON metadata")
@@ -80,12 +78,26 @@ def main():
         type=argparse.FileType('w'),
         default=sys.stdout)
 
+    sub_webface = subparsers.add_parser('webface',
+        help="run flask web interface")
+    sub_webface.set_defaults(
+        action='webface',
+    )
+    sub_webface.add_argument('--debug',
+        action='store_true',
+        help="enable debugging interface (note: not for everything)")
+    sub_webface.add_argument('--host',
+        default="127.0.0.1",
+        help="listen on this host/IP")
+    sub_webface.add_argument('--port',
+        type=int,
+        default=9119,
+        help="listen on this port")
+
     args = parser.parse_args()
 
-    if args.action == 'webface':
-        # don't import until we use app; otherwise sentry exception reporting happens
-        from fatcat_covid19.webface import app
-        app.run(debug=args.debug, host=args.host, port=args.port)
+    if args.action == 'parse-cord19':
+        parse_cord19_file(args.csv_path, args.json_output)
     elif args.action == 'enrich-fatcat':
         enrich_fatcat_file(args.json_file, args.json_output)
     elif args.action == 'enrich-derivatives':
@@ -93,6 +105,10 @@ def main():
             args.base_dir)
     elif args.action == 'transform-es':
         transform_es_file(args.json_file, args.json_output)
+    elif args.action == 'webface':
+        # don't import until we use app; otherwise sentry exception reporting happens
+        from fatcat_covid19.webface import app
+        app.run(debug=args.debug, host=args.host, port=args.port)
     else:
         print("tell me what to do!")
         sys.exit(-1)
