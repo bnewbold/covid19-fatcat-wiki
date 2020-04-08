@@ -83,15 +83,17 @@ def page_home():
 def fulltext_search():
 
     query = request.args.get('q')
+    filter_type = request.args.get('filter_type') or None
+    filter_time = request.args.get('filter_time') or None
 
     offset = request.args.get('offset', '0')
     offset = max(0, int(offset)) if offset.isnumeric() else 0
 
     if 'q' in request.args.keys():
-        found = do_fulltext_search(query, offset=offset)
-        return render_template('fulltext_search.html', found=found, query=query)
+        found = do_fulltext_search(query, offset=offset, filter_type=filter_type, filter_time=filter_time)
+        return render_template('fulltext_search.html', found=found, query=query, filter_type=filter_type, filter_time=filter_time)
     else:
-        return render_template('fulltext_search.html', query=query)
+        return render_template('fulltext_search.html', query=query, filter_type=filter_type, filter_time=filter_time)
 
 @bp.route('/about', methods=['GET'])
 def page_about():

@@ -21,13 +21,63 @@
           <input type="text" placeholder="{{ _("Query...") }}" name="q" value="{% if query %}{{ query }}{% endif %}" aria-label="search metadata">
           <button class="ui primary button">{{ _("Search") }}</button>
         </div>
-        {#
-        <div class="ui checkbox" style="float: right; margin: 1em;">
-          <input type="checkbox" name="fulltext_only" value="true" {% if fulltext_only %}checked{% endif %}>
-          <label>Fulltext Available Only</label>
+
+        <br>
+        Include: &nbsp;
+
+{#
+        <div class="ui inline dropdown">
+          <input type="hidden" name="filter_time">
+          <div class="text">{{ filter_time or 'any' }}</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="header">
+              <i class="filter icon"></i>
+              Publication Stage
+            </div>
+            <div class="divider"></div>
+            <div class="{% if filter_type == 'any'          %}active{% endif %} item" data-value="any"       >{{ _("any stage")     }}</div>
+            <div class="{% if filter_type == 'published'    %}active{% endif %} item" data-value="published" >{{ _("only published")     }}</div>
+            <div class="{% if filter_type == 'pre_print'    %}active{% endif %} item" data-value="pre_print" >{{ _("only pre-print")    }}</div>
+          </div>
         </div>
-        <br>Can also lookup by <b><a href="/release/lookup">identifier</a></b> or search for <b><a href="/container/search?q={{ query or "" }}">containers</a></b> (eg, journals).
-        #}
+#}
+
+        <div class="ui inline dropdown">
+          <input type="hidden" name="filter_type" value="{{ filter_type }}">
+          <div class="text">{{ filter_type or "papers" }}</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="header">
+              <i class="filter icon"></i>
+              Resource Type
+            </div>
+            <div class="divider"></div>
+            <div class="{% if filter_type == 'papers'     %}active{% endif %} item" data-value="papers"    >{{ _("papers")        }}</div>
+            <div class="{% if filter_type == 'reports'    %}active{% endif %} item" data-value="reports"   >{{ _("reports")       }}</div>
+            <div class="{% if filter_type == 'datasets'   %}active{% endif %} item" data-value="datasets"  >{{ _("datasets")      }}</div>
+            <div class="{% if filter_type == 'everything' %}active{% endif %} item" data-value="everything">{{ _("everything")    }}</div>
+          </div>
+        </div>
+
+        from
+        <div class="ui inline dropdown">
+          <input type="hidden" name="filter_time" vale="{{ filter_time }}">
+          <div class="text">{{ filter_time or "all time" }}</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="header">
+              <i class="filter icon"></i>
+              Time Period
+            </div>
+            <div class="divider"></div>
+            <div class="{% if filter_type == 'all'          %}active{% endif %} item" data-value="all"        >{{ _("all time")      }}</div>
+            <div class="{% if filter_type == 'past_week'    %}active{% endif %} item" data-value="past_week"  >{{ _("past week")     }}</div>
+            <div class="{% if filter_type == 'this_year'    %}active{% endif %} item" data-value="this_year"  >{{ _("this year")     }}</div>
+            <div class="{% if filter_type == 'since_2000'   %}active{% endif %} item" data-value="since_2000" >{{ _("since 2000")    }}</div>
+            <div class="{% if filter_type == 'before_1925'  %}active{% endif %} item" data-value="before_1925">{{ _("before 1925")   }}</div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -88,4 +138,12 @@
     {# "no query submitted" #}
 {% endif %}
 
+{% endblock %}
+
+{% block postscript %}
+<script>
+$('.ui.inline.dropdown')
+  .dropdown()
+;
+</script>
 {% endblock %}

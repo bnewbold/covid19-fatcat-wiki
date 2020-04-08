@@ -71,13 +71,41 @@ def generic_search_execute(search, limit=25, offset=0, deep_page_limit=2000):
         "query_time_ms": int(resp.took),
     }
 
-def do_fulltext_search(q, limit=25, offset=0):
+def do_fulltext_search(q, limit=25, offset=0, filter_time=None, filter_type=None):
 
     # Convert raw DOIs to DOI queries
     if len(q.split()) == 1 and q.startswith("10.") and q.count("/") >= 1:
         q = 'doi:"{}"'.format(q)
 
     search = Search(using=app.es_client, index=app.config['ELASTICSEARCH_FULLTEXT_INDEX'])
+
+    # type filters
+    if filter_type == "papers":
+        search = search.filter("terms", release_type=[ "article-journal", "paper-conference", ])
+    elif filter_type == "reports":
+        search = search.filter("terms", release_type=[ "report", "standard", ])
+    elif filter_type == "datasets":
+        search = search.filter("terms", release_type=[ "dataset", "software", ])
+    elif filter_type == "everything" or filter_type == None:
+        pass
+    else:
+        abort(400)
+
+    # time filters
+    if filter_time == "past_week":
+        week_ago_date = str(datetime.date.today() - datetime.timedelta(days=7))
+        search = search.filter("range", release_date=dict(gte=week_ago_date))
+    elif filter_time == "this_year":
+        search = search.filter("term", release_year=datetime.date.today().year)
+    elif filter_time == "since_2000":
+        search = search.filter("range", release_year=dict(gte=2000))
+    elif filter_time == "before_1925":
+        search = search.filter("range", release_year=dict(lte=1924))
+    elif filter_time == "all_time" or filter_time == None:
+        pass
+    else:
+        abort(400)
+
     search = search.query(
         'query_string',
         query=q,
