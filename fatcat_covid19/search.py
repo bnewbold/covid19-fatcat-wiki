@@ -81,7 +81,7 @@ def do_fulltext_search(q, limit=25, offset=0, filter_time=None, filter_type=None
 
     # type filters
     if filter_type == "papers":
-        search = search.filter("terms", release_type=[ "article-journal", "paper-conference", ])
+        search = search.filter("terms", release_type=[ "article-journal", "paper-conference", "chapter", ])
     elif filter_type == "reports":
         search = search.filter("terms", release_type=[ "report", "standard", ])
     elif filter_type == "datasets":

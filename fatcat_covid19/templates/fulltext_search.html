@@ -14,7 +14,7 @@
 
 <div class="ui vertical stripe segment" style="background-color: #EEE; padding-top: 2.5em; padding-bottom: 0.5em;">
   <div class="ui container text">
-    <h1>{{ _("Search COVID-19 documents") }}</h1>
+    <h1>{{ _("Search COVID-19 Research") }}</h1>
     <form class="" role="search" action="/fulltext/search" method="get">
       <div class="ui form">
         <div class="ui action input huge fluid">
@@ -23,34 +23,15 @@
         </div>
 
         <div style="padding-top: 0.85em; padding-left: 1em;">
-          Include: &nbsp;
-
-{#
+          {{ _("Include") }} &nbsp;
           <div class="ui inline dropdown">
-            <input type="hidden" name="filter_time">
-            <div class="text">{{ filter_time or 'any' }}</div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <div class="header">
-                <i class="filter icon"></i>
-                Publication Stage
-              </div>
-              <div class="divider"></div>
-              <div class="{% if filter_type == 'any'          %}active{% endif %} item" data-value="any"       >{{ _("any stage")     }}</div>
-              <div class="{% if filter_type == 'published'    %}active{% endif %} item" data-value="published" >{{ _("only published")     }}</div>
-              <div class="{% if filter_type == 'pre_print'    %}active{% endif %} item" data-value="pre_print" >{{ _("only pre-print")    }}</div>
-            </div>
-          </div>
-#}
-
-          <div class="ui inline dropdown">
-            <input type="hidden" name="filter_type" value="{{ filter_type }}">
+            <input type="hidden" name="filter_type" value="{{ filter_type or 'papers' }}">
             <div class="text">{{ filter_type or "papers" }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
               <div class="header">
                 <i class="filter icon"></i>
-                Resource Type
+                {{ _("Resource Type") }}
               </div>
               <div class="divider"></div>
               <div class="{% if filter_type == 'papers'     %}active{% endif %} item" data-value="papers"    >{{ _("papers")        }}</div>
@@ -60,15 +41,15 @@
             </div>
           </div>
 
-          from
+          {{ _("from") }}
           <div class="ui inline dropdown">
-            <input type="hidden" name="filter_time" vale="{{ filter_time }}">
-            <div class="text">{{ filter_time or "all time" }}</div>
+            <input type="hidden" name="filter_time" value="{{ filter_time or 'all' }}">
+            <div class="text">{{ (filter_time and filter_time.replace("_", " ")) or "all time" }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
               <div class="header">
                 <i class="filter icon"></i>
-                Time Period
+                {{ _("Time Period") }}
               </div>
               <div class="divider"></div>
               <div class="{% if filter_type == 'all'          %}active{% endif %} item" data-value="all"        >{{ _("all time")      }}</div>

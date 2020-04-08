@@ -170,7 +170,7 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
     # special-case medrxiv/biorxiv content
     if not t.get('release_stage') and not t.get('container_name') and t.get('doi', '').startswith('10.1101/20'):
-        t['container_name'] = 'biorXiv / medrXiv'
+        t['container_name'] = 'biorXiv/medrXiv'
         t['release_stage'] = 'draft'
         if t.get('release_type') in ['post', None]:
             t['release_type'] = 'article-journal'
