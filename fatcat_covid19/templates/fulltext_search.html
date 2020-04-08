@@ -12,7 +12,7 @@
 
 {% block fullmain %}
 
-<div class="ui vertical stripe segment" style="background-color: #EEE; padding-top: 2.5em;">
+<div class="ui vertical stripe segment" style="background-color: #EEE; padding-top: 2.5em; padding-bottom: 0.5em;">
   <div class="ui container text">
     <h1>{{ _("Search COVID-19 documents") }}</h1>
     <form class="" role="search" action="/fulltext/search" method="get">
@@ -22,60 +22,61 @@
           <button class="ui primary button">{{ _("Search") }}</button>
         </div>
 
-        <br>
-        Include: &nbsp;
+        <div style="padding-top: 0.85em; padding-left: 1em;">
+          Include: &nbsp;
 
 {#
-        <div class="ui inline dropdown">
-          <input type="hidden" name="filter_time">
-          <div class="text">{{ filter_time or 'any' }}</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div class="header">
-              <i class="filter icon"></i>
-              Publication Stage
+          <div class="ui inline dropdown">
+            <input type="hidden" name="filter_time">
+            <div class="text">{{ filter_time or 'any' }}</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="header">
+                <i class="filter icon"></i>
+                Publication Stage
+              </div>
+              <div class="divider"></div>
+              <div class="{% if filter_type == 'any'          %}active{% endif %} item" data-value="any"       >{{ _("any stage")     }}</div>
+              <div class="{% if filter_type == 'published'    %}active{% endif %} item" data-value="published" >{{ _("only published")     }}</div>
+              <div class="{% if filter_type == 'pre_print'    %}active{% endif %} item" data-value="pre_print" >{{ _("only pre-print")    }}</div>
             </div>
-            <div class="divider"></div>
-            <div class="{% if filter_type == 'any'          %}active{% endif %} item" data-value="any"       >{{ _("any stage")     }}</div>
-            <div class="{% if filter_type == 'published'    %}active{% endif %} item" data-value="published" >{{ _("only published")     }}</div>
-            <div class="{% if filter_type == 'pre_print'    %}active{% endif %} item" data-value="pre_print" >{{ _("only pre-print")    }}</div>
           </div>
-        </div>
 #}
 
-        <div class="ui inline dropdown">
-          <input type="hidden" name="filter_type" value="{{ filter_type }}">
-          <div class="text">{{ filter_type or "papers" }}</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div class="header">
-              <i class="filter icon"></i>
-              Resource Type
+          <div class="ui inline dropdown">
+            <input type="hidden" name="filter_type" value="{{ filter_type }}">
+            <div class="text">{{ filter_type or "papers" }}</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="header">
+                <i class="filter icon"></i>
+                Resource Type
+              </div>
+              <div class="divider"></div>
+              <div class="{% if filter_type == 'papers'     %}active{% endif %} item" data-value="papers"    >{{ _("papers")        }}</div>
+              <div class="{% if filter_type == 'reports'    %}active{% endif %} item" data-value="reports"   >{{ _("reports")       }}</div>
+              <div class="{% if filter_type == 'datasets'   %}active{% endif %} item" data-value="datasets"  >{{ _("datasets")      }}</div>
+              <div class="{% if filter_type == 'everything' %}active{% endif %} item" data-value="everything">{{ _("everything")    }}</div>
             </div>
-            <div class="divider"></div>
-            <div class="{% if filter_type == 'papers'     %}active{% endif %} item" data-value="papers"    >{{ _("papers")        }}</div>
-            <div class="{% if filter_type == 'reports'    %}active{% endif %} item" data-value="reports"   >{{ _("reports")       }}</div>
-            <div class="{% if filter_type == 'datasets'   %}active{% endif %} item" data-value="datasets"  >{{ _("datasets")      }}</div>
-            <div class="{% if filter_type == 'everything' %}active{% endif %} item" data-value="everything">{{ _("everything")    }}</div>
           </div>
-        </div>
 
-        from
-        <div class="ui inline dropdown">
-          <input type="hidden" name="filter_time" vale="{{ filter_time }}">
-          <div class="text">{{ filter_time or "all time" }}</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div class="header">
-              <i class="filter icon"></i>
-              Time Period
+          from
+          <div class="ui inline dropdown">
+            <input type="hidden" name="filter_time" vale="{{ filter_time }}">
+            <div class="text">{{ filter_time or "all time" }}</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="header">
+                <i class="filter icon"></i>
+                Time Period
+              </div>
+              <div class="divider"></div>
+              <div class="{% if filter_type == 'all'          %}active{% endif %} item" data-value="all"        >{{ _("all time")      }}</div>
+              <div class="{% if filter_type == 'past_week'    %}active{% endif %} item" data-value="past_week"  >{{ _("past week")     }}</div>
+              <div class="{% if filter_type == 'this_year'    %}active{% endif %} item" data-value="this_year"  >{{ _("this year")     }}</div>
+              <div class="{% if filter_type == 'since_2000'   %}active{% endif %} item" data-value="since_2000" >{{ _("since 2000")    }}</div>
+              <div class="{% if filter_type == 'before_1925'  %}active{% endif %} item" data-value="before_1925">{{ _("before 1925")   }}</div>
             </div>
-            <div class="divider"></div>
-            <div class="{% if filter_type == 'all'          %}active{% endif %} item" data-value="all"        >{{ _("all time")      }}</div>
-            <div class="{% if filter_type == 'past_week'    %}active{% endif %} item" data-value="past_week"  >{{ _("past week")     }}</div>
-            <div class="{% if filter_type == 'this_year'    %}active{% endif %} item" data-value="this_year"  >{{ _("this year")     }}</div>
-            <div class="{% if filter_type == 'since_2000'   %}active{% endif %} item" data-value="since_2000" >{{ _("since 2000")    }}</div>
-            <div class="{% if filter_type == 'before_1925'  %}active{% endif %} item" data-value="before_1925">{{ _("before 1925")   }}</div>
           </div>
         </div>
       </div>
@@ -90,7 +91,7 @@
     <div class="ui container text" style="padding: 1em;">
       {{ entity_macros.top_results(found) }}
     </div>
-    <div class="ui container" style="max-width: 950px !important;">
+    <div class="ui container" style="max-width: 1000px !important; font-size: 16px;">
       <div class="ui centered stackable grid">
         {% for paper in found.results %}
           {{ entity_macros.fulltext_search_result_row(paper) }}
