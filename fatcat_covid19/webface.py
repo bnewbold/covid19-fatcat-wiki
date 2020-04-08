@@ -99,21 +99,21 @@ def page_about():
 def page_sources():
     return render_template('sources_{}.html'.format(g.lang_code))
 
+# TODO: how to translate these pages? lang_code issue
+#@bp.app_errorhandler(404)
+#def page_not_found(e):
+#    return render_template('404.html'), 404
 
-@bp.app_errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
+#@bp.app_errorhandler(502)
+#@bp.app_errorhandler(503)
+#@bp.app_errorhandler(504)
+#@bp.app_errorhandler(500)
+#def page_server_error(e):
+#    return render_template('500.html'), 500
 
 @bp.app_errorhandler(400)
 def page_bad_request(e):
     return render_template('400.html'), 400
-
-@bp.app_errorhandler(502)
-@bp.app_errorhandler(503)
-@bp.app_errorhandler(504)
-@bp.app_errorhandler(500)
-def page_server_error(e):
-    return render_template('500.html'), 500
 
 @app.route('/robots.txt', methods=['GET'])
 def robots():
