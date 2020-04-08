@@ -168,6 +168,17 @@ def fulltext_to_elasticsearch(row, force_bool=True):
     if t['doi']:
         t['doi_prefix'] = t['doi'].split('/')[0]
 
+    # special-case medrxiv/biorxiv content
+    if not t.get('release_stage') and not t.get('container_name') and t.get('doi', '').startswith('10.1101/20'):
+        t['container_name'] = 'biorXiv / medrXiv'
+        t['release_stage'] = 'draft'
+        if t.get('release_type') in ['post', None]:
+            t['release_type'] = 'article-journal'
+
+    # special-case arxiv
+    if not t.get('container_name') and t.get('arxiv_id'):
+        t['container_name'] = 'arXiv'
+
     # then the fulltext stuff
     t['fulltext']['status'] = row.get('fulltext_status', 'none')
     if 'fulltext_file' in row:
