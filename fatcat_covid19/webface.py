@@ -9,6 +9,7 @@ import subprocess
 from flask import Flask, Blueprint, g, app, render_template, request
 from flask_babel import Babel, gettext
 from flask.logging import create_logger
+import elasticsearch
 
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -49,6 +50,7 @@ app = Flask(__name__, static_url_path='/static')
 app.config.from_object(BaseConfig())
 app.log = create_logger(app)
 babel = Babel(app)
+app.es_client = elasticsearch.Elasticsearch(app.config['ELASTICSEARCH_BACKEND'])
 
 from fatcat_covid19.search import *
 

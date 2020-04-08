@@ -8,11 +8,14 @@ already have a WIP branch for this in fatcat repo.
 
 import json
 import datetime
-import requests
-from flask import abort, flash
+from flask import abort
 from fatcat_covid19.webface import app
 
-def do_search(index, request, limit=25, offset=0, deep_page_limit=2000):
+import elasticsearch
+from elasticsearch_dsl import Search, Q
+
+
+def generic_search_execute(search, limit=25, offset=0, deep_page_limit=2000):
 
     # Sanity checks
     if limit > 100:
@@ -23,33 +26,33 @@ def do_search(index, request, limit=25, offset=0, deep_page_limit=2000):
         # Avoid deep paging problem.
         offset = deep_page_limit
 
-    request["size"] = int(limit)
-    request["from"] = int(offset)
-    # print(request)
-    resp = requests.get("%s/%s/_search" %
-            (app.config['ELASTICSEARCH_BACKEND'], index),
-        json=request)
+    search = search[int(offset):int(offset)+int(limit)]
 
-    if resp.status_code == 400:
-        print("elasticsearch 400: " + str(resp.content))
-        #flash("Search query failed to parse; you might need to use quotes.<p><code>{}</code>".format(resp.content))
-        abort(resp.status_code)
-    elif resp.status_code != 200:
-        print("elasticsearch non-200 status code: " + str(resp.status_code))
-        print(resp.content)
-        abort(resp.status_code)
+    try:
+        resp = search.execute()
+    except elasticsearch.exceptions.RequestError as e:
+        # this is a "user" error
+        print("elasticsearch 400: " + str(e.info))
+        #flash("Search query failed to parse; you might need to use quotes.<p><code>{}: {}</code>".format(e.error, e.info['error']['root_cause'][0]['reason']))
+        abort(e.status_code)
+    except elasticsearch.exceptions.TransportError as e:
+        # all other errors
+        print("elasticsearch non-200 status code: {}".format(e.info))
+        flash("Elasticsearch error: {}".format(e.error))
+        abort(e.status_code)
 
-    content = resp.json()
-    #print(json.dumps(content, indent=2))
+    # convert from objects to python dicts
     results = []
-    for h in content['hits']['hits']:
-        r = h['_source']
+    for h in resp:
+        r = h._d_
+        #print(json.dumps(h.meta._d_, indent=2))
         r['_highlights'] = []
-        highlights = h.get('highlight', {})
-        for k in highlights:
-            r['_highlights'] += highlights[k]
+        if 'highlight' in dir(h.meta):
+            highlights = h.meta.highlight._d_
+            for k in highlights:
+                r['_highlights'] += highlights[k]
         results.append(r)
-    #print(json.dumps(results, indent=2))
+
     for h in results:
         # Handle surrogate strings that elasticsearch returns sometimes,
         # probably due to mangled data processing in some pipeline.
@@ -58,60 +61,51 @@ def do_search(index, request, limit=25, offset=0, deep_page_limit=2000):
             if type(h[key]) is str:
                 h[key] = h[key].encode('utf8', 'ignore').decode('utf8')
 
-    return {"count_returned": len(results),
-            "count_found": content['hits']['total'],
-            "results": results,
-            "offset": offset,
-            "deep_page_limit": deep_page_limit}
+    return {
+        "count_returned": len(results),
+        "count_found": int(resp.hits.total),
+        "results": results,
+        "offset": offset,
+        "limit": limit,
+        "deep_page_limit": deep_page_limit,
+        "query_time_ms": int(resp.took),
+    }
 
 def do_fulltext_search(q, limit=25, offset=0):
-
-    #print("Search hit: " + q)
-    if limit > 100:
-        # Sanity check
-        limit = 100
 
     # Convert raw DOIs to DOI queries
     if len(q.split()) == 1 and q.startswith("10.") and q.count("/") >= 1:
         q = 'doi:"{}"'.format(q)
 
+    search = Search(using=app.es_client, index=app.config['ELASTICSEARCH_FULLTEXT_INDEX'])
+    search = search.query(
+        'query_string',
+        query=q,
+        default_operator="AND",
+        analyze_wildcard=True,
+        lenient=True,
+        fields=[
+            "everything",
+            "abstract",
+            "fulltext.body",
+            "fulltext.annex",
+        ],
+    )
+    search = search.highlight(
+        "abstract",
+        "fulltext.body",
+        "fulltext.annex",
+        number_of_fragments=3,
+        fragment_size=150,
+    )
 
-    search_request = {
-        "query": {
-            "query_string": {
-                "query": q,
-                "default_operator": "AND",
-                "analyze_wildcard": True,
-                "lenient": True,
-                "fields": [
-                    "everything",
-                    "abstract",
-                    "fulltext.body",
-                    "fulltext.annex",
-                ],
-            },
-        },
-        "highlight" : {
-            "number_of_fragments" : 3,
-            "fragment_size" : 150,
-            "fields" : {
-                "abstract": { },
-                "fulltext.body": { },
-                "fulltext.annex": { },
-                #"everything": { "number_of_fragments" : 3 },
-                #"fulltext.abstract": { "number_of_fragments" : 3 },
-                #"fulltext.body":     { "number_of_fragments" : 3 },
-                #"fulltext.annex":    { "number_of_fragments" : 3 },
-            },
-        },
-    }
+    resp = generic_search_execute(search, offset=offset)
 
-    resp = do_search(app.config['ELASTICSEARCH_FULLTEXT_INDEX'], search_request, offset=offset)
     for h in resp['results']:
         # Ensure 'contrib_names' is a list, not a single string
         if type(h['contrib_names']) is not list:
             h['contrib_names'] = [h['contrib_names'], ]
         h['contrib_names'] = [name.encode('utf8', 'ignore').decode('utf8') for name in h['contrib_names']]
+
     resp["query"] = { "q": q }
-    resp["limit"] = limit
     return resp
