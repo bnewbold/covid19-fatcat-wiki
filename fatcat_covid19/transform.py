@@ -67,14 +67,17 @@ def fulltext_to_elasticsearch(row, force_bool=True):
         'pmcid',
         'isbn13',
         'wikidata_qid',
-        'arxiv_id',
-        'jstor_id',
-        'mag_id',
+        'arxiv',
+        'jstor',
+        'mag',
     ]
     for key in BIBLIO_KEYS:
         t[key] = release.get(key) or None
     for key in EXT_IDS:
-        t[key] = release['ext_ids'].get(key) or None
+        if key in ['arxiv', 'jstor', 'mag']:
+            t[key + "_id"] = release['ext_ids'].get(key) or None
+        else:
+            t[key] = release['ext_ids'].get(key) or None
 
     t['contrib_count'] = len(release['contribs'] or [])
 
