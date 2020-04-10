@@ -10,7 +10,9 @@ import sys
 import argparse
 
 from fatcat_covid19.parse import parse_cord19_file
+from fatcat_covid19.query import query_fatcat
 from fatcat_covid19.enrich import enrich_fatcat_file
+from fatcat_covid19.dedupe import dedupe_file
 from fatcat_covid19.derivatives import enrich_derivatives_file
 from fatcat_covid19.transform import transform_es_file
 
@@ -32,6 +34,30 @@ def main():
         help="input CSV file path",
         type=str)
     sub_parse_cord.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('w'),
+        default=sys.stdout)
+
+    sub_query_fatcat = subparsers.add_parser('query-fatcat',
+        help="query fatcat search index for releases")
+    sub_query_fatcat.set_defaults(
+        action='query-fatcat',
+    )
+    sub_query_fatcat.add_argument('--json-output',
+        help="file to write to",
+        type=argparse.FileType('w'),
+        default=sys.stdout)
+
+    sub_dedupe = subparsers.add_parser('dedupe',
+        help="emit only one JSON line per fatcat release_id")
+    sub_dedupe.set_defaults(
+        action='dedupe',
+    )
+    sub_dedupe.add_argument('--json-input',
+        help="input JSON rows file (eg, CORD-19 parsed JSON)",
+        type=argparse.FileType('r'),
+        default=sys.stdin)
+    sub_dedupe.add_argument('--json-output',
         help="file to write to",
         type=argparse.FileType('w'),
         default=sys.stdout)
@@ -98,6 +124,10 @@ def main():
 
     if args.action == 'parse-cord19':
         parse_cord19_file(args.csv_path, args.json_output)
+    elif args.action == 'query-fatcat':
+        query_fatcat(args.json_output)
+    elif args.action == 'dedupe':
+        dedupe_file(args.json_input, args.json_output)
     elif args.action == 'enrich-fatcat':
         enrich_fatcat_file(args.json_file, args.json_output)
     elif args.action == 'enrich-derivatives':
