@@ -12,6 +12,8 @@
     <a href="https://pubmed.ncbi.nlm.nih.gov/{{ paper.pmid }}/"
     {% elif paper.arxiv_id %}
     <a href="https://arxiv.org/abs/{{ paper.arxiv_id }}/"
+    {% elif paper.doi %}
+    <a href="https://doi.org/{{ paper.doi }}"
     {% else %}
     <a href="https://fatcat.wiki/release/{{ paper.fatcat_ident }}"
     {% endif %}
