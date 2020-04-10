@@ -81,7 +81,7 @@ def fulltext_to_elasticsearch(row, force_bool=True):
 
             # hack to (partially) clean up common JATS abstract display case
             if a.get('mimetype') == 'application/xml+jats':
-                for tag in ('p', 'jats', 'jats:p', 'jats:title'):
+                for tag in ('p', 'b', 'i', 'br', 'jats', 'jats:p', 'jats:title'):
                     a['content'] = a['content'].replace('<{}>'.format(tag), '')
                     a['content'] = a['content'].replace('</{}>'.format(tag), '')
                     # ugh, double encoding happens
