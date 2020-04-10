@@ -12,6 +12,8 @@ Flask-Babel = "*"
 elasticsearch-dsl = ">=6.0.0,<7.0.0"
 elasticsearch = ">=6.0.0,<7.0.0"
 sentry-sdk = { version = ">=0.14.0", extras = ["flask"] }
+bs4 = "*"
+lxml = "*"
 
 [dev-packages]
 pytest = "*"
