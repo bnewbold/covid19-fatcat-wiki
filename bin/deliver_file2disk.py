@@ -123,7 +123,7 @@ class DeliverFatcatDisk:
         """
         good = []
         for f in files:
-            if f['mimetype'] and not 'pdf' in f['mimetype'].lower():
+            if f.get('mimetype') and not 'pdf' in f['mimetype'].lower():
                 continue
             for url in f['urls']:
                 if 'archive.org/' in url['url']:

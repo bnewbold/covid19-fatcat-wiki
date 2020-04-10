@@ -80,7 +80,7 @@ def find_local_file(files, base_dir="."):
     If found, returns the file entity; the path can be determined from the sha1hex field.
     """
     for f in files:
-        if f['mimetype'] and not 'pdf' in f['mimetype'].lower():
+        if f.get('mimetype') and not 'pdf' in f['mimetype'].lower():
             continue
         pdf_path = blob_path(f['sha1'], directory="pdf/", file_suffix=".pdf", base_dir=base_dir)
         if os.path.isfile(pdf_path):
