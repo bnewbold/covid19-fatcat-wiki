@@ -6,7 +6,7 @@ This is the single-file Flask web application
 import os
 import subprocess
 
-from flask import Flask, Blueprint, g, app, render_template, request
+from flask import Flask, Blueprint, g, app, render_template, request, send_from_directory
 from flask_babel import Babel, gettext
 from flask.logging import create_logger
 import elasticsearch
