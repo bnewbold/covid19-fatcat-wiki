@@ -4,6 +4,8 @@ import json
 import argparse
 import datetime
 
+from bs4 import BeautifulSoup
+
 from fatcat_covid19.common import *
 
 
@@ -80,13 +82,8 @@ def fulltext_to_elasticsearch(row, force_bool=True):
         for a in release['abstracts']:
 
             # hack to (partially) clean up common JATS abstract display case
-            if a.get('mimetype') == 'application/xml+jats':
-                for tag in ('p', 'b', 'i', 'br', 'jats', 'jats:p', 'jats:title'):
-                    a['content'] = a['content'].replace('<{}>'.format(tag), '')
-                    a['content'] = a['content'].replace('</{}>'.format(tag), '')
-                    # ugh, double encoding happens
-                    a['content'] = a['content'].replace('&lt;/{}&gt;'.format(tag), '')
-                    a['content'] = a['content'].replace('&lt;{}&gt;'.format(tag), '')
+            if a.get('mimetype') == 'application/xml+jats' or "</" in a['content']:
+                a['content'] = BeautifulSoup(a['content'], "lxml").get_text()
 
             # hack to remove abstract prefixes
             for prefix in UNWANTED_ABSTRACT_PREFIXES:
