@@ -10,6 +10,8 @@
     <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/{{ paper.pmcid }}/"
     {% elif paper.pmid %}
     <a href="https://pubmed.ncbi.nlm.nih.gov/{{ paper.pmid }}/"
+    {% elif paper.arxiv_id %}
+    <a href="https://arxiv.org/abs/{{ paper.arxiv_id }}/"
     {% else %}
     <a href="https://fatcat.wiki/release/{{ paper.fatcat_ident }}"
     {% endif %}
