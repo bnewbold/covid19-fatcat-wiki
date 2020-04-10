@@ -43,7 +43,7 @@
 
           {{ _("from") }}
           <div class="ui inline dropdown">
-            <input type="hidden" name="filter_time" value="{{ filter_time or 'all' }}">
+            <input type="hidden" name="filter_time" value="{{ filter_time or 'all_time' }}">
             <div class="text">{{ (filter_time and filter_time.replace("_", " ")) or "all time" }}</div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -52,7 +52,7 @@
                 {{ _("Time Period") }}
               </div>
               <div class="divider"></div>
-              <div class="{% if filter_type == 'all'          %}active{% endif %} item" data-value="all"        >{{ _("all time")      }}</div>
+              <div class="{% if filter_type == 'all_time'     %}active{% endif %} item" data-value="all_time"   >{{ _("all time")      }}</div>
               <div class="{% if filter_type == 'past_week'    %}active{% endif %} item" data-value="past_week"  >{{ _("past week")     }}</div>
               <div class="{% if filter_type == 'this_year'    %}active{% endif %} item" data-value="this_year"  >{{ _("this year")     }}</div>
               <div class="{% if filter_type == 'since_2000'   %}active{% endif %} item" data-value="since_2000" >{{ _("since 2000")    }}</div>

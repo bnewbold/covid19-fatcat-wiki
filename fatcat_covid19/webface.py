@@ -83,8 +83,8 @@ def page_home():
 def fulltext_search():
 
     query = request.args.get('q')
-    filter_type = request.args.get('filter_type') or None
-    filter_time = request.args.get('filter_time') or None
+    filter_type = request.args.get('filter_type') or 'papers'
+    filter_time = request.args.get('filter_time') or 'all_time'
 
     offset = request.args.get('offset', '0')
     offset = max(0, int(offset)) if offset.isnumeric() else 0
