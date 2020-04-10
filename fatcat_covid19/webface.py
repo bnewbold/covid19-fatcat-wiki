@@ -52,6 +52,10 @@ app.log = create_logger(app)
 babel = Babel(app)
 app.es_client = elasticsearch.Elasticsearch(app.config['ELASTICSEARCH_BACKEND'])
 
+# remove most jinja2 template whitespace
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
+
 from fatcat_covid19.search import *
 
 bp = Blueprint('search', __name__)
