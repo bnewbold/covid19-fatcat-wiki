@@ -169,7 +169,7 @@ def fulltext_to_elasticsearch(row, force_bool=True):
         t['doi_prefix'] = t['doi'].split('/')[0]
 
     # special-case medrxiv/biorxiv content
-    if not t.get('release_stage') and not t.get('container_name') and t.get('doi', '').startswith('10.1101/20'):
+    if not t.get('release_stage') and not t.get('container_name') and (t.get('doi') or '').startswith('10.1101/20'):
         t['container_name'] = 'biorXiv/medrXiv'
         t['release_stage'] = 'draft'
         if t.get('release_type') in ['post', None]:
@@ -228,11 +228,26 @@ def fulltext_to_elasticsearch(row, force_bool=True):
             abstracts.append(paper['abstract'])
         if not t['license']:
             t['license'] = paper.get('license') or None
+
+    if 'fatcat_hit' in row:
+        t['source_tags'].append('fatcat')
     
     t['abstract'] = abstracts
     t['abstract_lang'] = list(set(abstract_langs))
 
     t['source_tags'] = list(set(t['source_tags']))
+
+    ### filter out some documents
+    # figures, component of a larger work, drop it
+    if t['title'].lower().startswith('figure') and not t.get('release_type'):
+        return None
+
+    ### clean up some documents
+    # protein databank
+    if t.get('doi_prefix') == '10.2210' and not t.get('release_type'):
+        t['release_type'] = 'dataset'
+        t['release_stage'] = 'published'
+        t['container_name'] = 'Protein Data Bank'
 
     return t
 
