@@ -14,9 +14,9 @@ fi
 echo "processing: $PDFPATH"
 
 if [[ ! -f "$FULLTEXTDIR/pdftotext/$BLOBPATH.txt" ]]; then
-    pdftotext $PDFPATH $FULLTEXTDIR/pdftotext/$BLOBPATH.txt
+    pdftotext $PDFPATH $FULLTEXTDIR/pdftotext/$BLOBPATH.txt || true
 fi
 
 if [[ ! -f "$FULLTEXTDIR/thumbnail/$BLOBPATH.png" ]]; then
-    pdftocairo -png -singlefile -scale-to-x 400 -scale-to-y -1 $PDFPATH $FULLTEXTDIR/thumbnail/$BLOBPATH
+    pdftocairo -png -singlefile -scale-to-x 400 -scale-to-y -1 $PDFPATH $FULLTEXTDIR/thumbnail/$BLOBPATH || true
 fi
