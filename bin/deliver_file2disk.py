@@ -149,6 +149,8 @@ class DeliverFatcatDisk:
             return ('wayback-error', None)
         except requests.exceptions.TooManyRedirects:
             return ('too-many-redirects', None)
+        except requests.exceptions.ChunkedEncodingError:
+            return ('chunked-encoding', None)
         if resp.status_code != 200:
             return ('fetch:{}'.format(resp.status_code), None)
         else:
