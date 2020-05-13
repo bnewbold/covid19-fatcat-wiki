@@ -7,8 +7,9 @@ Need beautiful soup; we aren't using pipenv here:
 
 Base URL: <http://en.gzbd.cnki.net/GZBT/brief/Default.aspx>
 
-2020-03-29: "Found 1914 articles"
-2020-04-06: "Found 2224 articles"
+- 2020-03-29: "Found 1914 articles"
+- 2020-04-06: "Found 2224 articles"
+- 2020-04-13: "Found 2536 articles"
 
 Uses JS to fetch tables, URLs look like:
 
@@ -17,7 +18,7 @@ Uses JS to fetch tables, URLs look like:
 Fetch a bunch:
 
     # bump this seq number based on number of articles divided by 30, round up
-    seq 0 77 | parallel http get "http://en.gzbd.cnki.net/gzbt/request/otherhandler.ashx?action=gzbdFlag\&contentID=0\&orderStr=1\&page={}\&grouptype=undefined\&groupvalue=undefined" > metadata/cnki_tables.`date -I`.html
+    seq 0 85 | parallel http get "http://en.gzbd.cnki.net/gzbt/request/otherhandler.ashx?action=gzbdFlag\&contentID=0\&orderStr=1\&page={}\&grouptype=undefined\&groupvalue=undefined" > metadata/cnki_tables.`date -I`.html
 
 Parse HTML snippets to JSON:
 
@@ -35,16 +36,19 @@ Maybe need to set a referer, something like that?
 
     wget 'http://subject.med.wanfangdata.com.cn/Channel/7?mark=32' -O metadata/wanfang_guidance.`date -I`.html
     wget 'http://subject.med.wanfangdata.com.cn/Channel/7?mark=34' -O metadata/wanfang_papers.`date -I`.html
+    wget 'http://subject.med.wanfangdata.com.cn/Channel/7?mark=38' -O metadata/wanfang_tcm.`date -I`.html
 
     ./extra/scrape/parse_wanfang_html.py metadata/wanfang_papers.`date -I`.html > metadata/wanfang_papers.`date -I`.json
     ./extra/scrape/parse_wanfang_html.py metadata/wanfang_guidance.`date -I`.html > metadata/wanfang_guidance.`date -I`.json
 
 Download PDFs (without clobbering existing):
 
-    cat metadata/wanfang_papers.`date -I`.json metadata/wanfang_guidance.`date -I`.json | jq .url -r | shuf | parallel wget -P fulltext_wanfang --no-clobber {}
+    mkdir -p fulltext_wanfang_download fulltext_wanfang
+    cat metadata/wanfang_papers.`date -I`.json metadata/wanfang_guidance.`date -I`.json | jq .url -r | shuf | parallel wget -P fulltext_wanfang_download --no-clobber {}
 
 Rename based on mimetype:
 
+    cp fulltext_wanfang_download/* fulltext_wanfang
     ./bin/fix_extensions.sh fulltext_wanfang
 
 What did we get?
