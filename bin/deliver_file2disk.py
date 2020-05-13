@@ -151,6 +151,8 @@ class DeliverFatcatDisk:
             return ('too-many-redirects', None)
         except requests.exceptions.ChunkedEncodingError:
             return ('chunked-encoding', None)
+        except requests.exceptions.ConnectionError:
+            return ('connection-error', None)
         if resp.status_code != 200:
             return ('fetch:{}'.format(resp.status_code), None)
         else:
@@ -172,6 +174,8 @@ class DeliverFatcatDisk:
                 continue
             status, content = self.fetch_content(url)
             if status == 'success':
+                if not content:
+                    return ('null-blob', sha1hex, None)
                 # TODO: verify sha1hex
                 file_meta = gen_file_metadata(content)
                 if file_meta['sha1hex'] != sha1hex:
