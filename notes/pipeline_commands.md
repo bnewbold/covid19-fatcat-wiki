@@ -67,7 +67,13 @@ Create and index existing `fatcat_release` schema:
 
     # in fatcat python directory, pipenv shell
     export LC_ALL=C.UTF-8
+    export TODAY="`TZ=UTC date --iso-8601=date`"
     cat /srv/fatcat_covid19/src/metadata/combined.$TODAY.enrich.json | jq .fatcat_release -c | rg -v '^null$' | pv -l | ./fatcat_transform.py elasticsearch-releases - - | esbulk -verbose -size 1000 -id ident -w 8 -index covid19_fatcat_release -type release
+
+Attempt crawl/ingest of missing papers:
+
+    ./fatcat_ingest.py --env prod --enqueue-kafka --elasticsearch-index covid19_fatcat_release --fatcat-api-url https://api.fatcat.wiki/v0 --kafka-hosts wbgrp-svc263.us.archive.org --allow-non-oa query "pmcid:*"
+    ./fatcat_ingest.py --env prod --enqueue-kafka --elasticsearch-index covid19_fatcat_release --fatcat-api-url https://api.fatcat.wiki/v0 --kafka-hosts wbgrp-svc263.us.archive.org --allow-non-oa query "-_exists_:pmcid doi:*"
 
 ## GROBID Processing
 
