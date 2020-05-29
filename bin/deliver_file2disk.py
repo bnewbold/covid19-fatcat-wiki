@@ -10,7 +10,13 @@ Behavior:
     - try downloading from any archive.org or web.archive.org URLs
     - verify SHA-1
     - write out to disk
+
+This file is copied from the fatcat repository.
 """
+
+# XXX: some broken MRO thing going on in here due to python3 object wrangling
+# in `wayback` library. Means we can't run pylint.
+# pylint: skip-file
 
 import os
 import sys
