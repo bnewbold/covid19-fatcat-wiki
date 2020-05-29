@@ -14,8 +14,10 @@ def parse_cord19_file(csv_path, json_output):
         reader = csv.DictReader(csvfile)
         for row in reader:
             row = dict(row)
-            row['mag_id'] = row.pop('Microsoft Academic Paper ID')
-            row['who_covidence_id'] = row.pop('WHO #Covidence').replace('#', '')
+            # Previously had to rename these columns
+            #row['mag_id'] = row.pop('Microsoft Academic Paper ID')
+            #row['who_covidence_id'] = row.pop('WHO #Covidence').replace('#', '')
+            row['who_covidence_id'] = row['who_covidence_id'].replace('#', '')
             obj = dict(cord19_paper=row)
             print(json.dumps(obj, sort_keys=True), file=json_output)
 
