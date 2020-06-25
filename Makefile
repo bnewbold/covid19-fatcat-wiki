@@ -1,6 +1,6 @@
 
-TODAY := $(shell date --iso --utc)
-CORDDATE := $(TODAY)
+TODAY ?= $(shell date --iso --utc)
+CORDDATE ?= $(TODAY)
 SHELL = /bin/bash
 .SHELLFLAGS = -o pipefail -c
 
@@ -26,7 +26,7 @@ update-i18n: ## Re-extract and re-compile translation files
 metadata/$(CORDDATE)/cord19.csv:
 	mkdir -p metadata/$(CORDDATE)
 	@#wget -c "https://archive.org/download/s2-cord19-dataset/cord19.$(CORDDATE).csv" -O /tmp/cord19.$(CORDDATE).csv
-	wget -c "https://ai2-semanticscholar-cord-19.s3-us-west-2.amazonaws.com/latest/metadata.csv" -O /tmp/cord19.$(CORDDATE).csv
+	wget -c "https://ai2-semanticscholar-cord-19.s3-us-west-2.amazonaws.com/$(CORDDATE)/metadata.csv" -O /tmp/cord19.$(CORDDATE).csv
 	mv /tmp/cord19.$(CORDDATE).csv $@
 
 metadata/$(CORDDATE)/cord19.json: metadata/$(CORDDATE)/cord19.csv
@@ -43,7 +43,7 @@ metadata/$(CORDDATE)/cord19.missing.json: metadata/$(CORDDATE)/cord19.enrich.jso
 
 metadata/$(TODAY)/fatcat_hits.enrich.json:
 	mkdir -p metadata/$(TODAY)
-	pipenv run ./covid19_tool.py query-fatcat | pv -l > $@
+	pipenv run ./covid19_tool.py query-fatcat | pv -l > $@.wip
 	mv $@.wip $@
 
 metadata/$(TODAY)/combined.enrich.json: metadata/$(CORDDATE)/cord19.enrich.json metadata/$(TODAY)/fatcat_hits.enrich.json
@@ -59,9 +59,8 @@ metadata/$(TODAY)/derivatives.stamp: metadata/$(TODAY)/fatcat_web.log
 	touch $@
 
 metadata/$(TODAY)/combined.fulltext.json: metadata/$(TODAY)/derivatives.stamp metadata/$(TODAY)/combined.enrich.json
-	./covid19_tool.py enrich-derivatives metadata/$(TODAY)/combined.enrich.json --base-dir fulltext_web/ | pv -l > $@.wip
+	pipenv run ./covid19_tool.py enrich-derivatives metadata/$(TODAY)/combined.enrich.json --base-dir fulltext_web/ | pv -l > $@.wip
 	mv $@.wip $@
-
 
 .PHONY: corpus
 corpus: metadata/$(TODAY)/combined.fulltext.json ## Run ingest, resulting in combined fulltext JSON corpus on disk
@@ -73,8 +72,8 @@ create-es-index:
 
 .PHONY: load-es
 load-es: metadata/$(TODAY)/combined.fulltext.json ## Push current corpus into elasticsearch index
-	pipenv run ./covid19_tool.py metadata/$(TODAY)/combined.fulltext.json | pv -l | esbulk -verbose -size 1000 -id fatcat_ident -w 8 -index covid19_fatcat_fulltext -type release
+	pipenv run ./covid19_tool.py transform-es metadata/$(TODAY)/combined.fulltext.json | pv -l | esbulk -verbose -size 1000 -id fatcat_ident -w 8 -index covid19_fatcat_fulltext -type release
 
 .PHONY: daily-update
-daily-update: load-elasticsearch ## Command to run every day: fetch corpus, load to elasticsearch
+daily-update: load-es  ## Command to run every day: fetch corpus, load to elasticsearch
 
